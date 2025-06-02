@@ -26,7 +26,6 @@ class ScoreTokensController extends BaseController
             abort(422, 'score submission is disabled');
         }
 
-        $beatmap = Beatmap::increasesStatistics()->findOrFail($beatmapId);
         $user = auth()->user();
         $request = \Request::instance();
         $params = get_params($request->all(), null, [
@@ -34,18 +33,26 @@ class ScoreTokensController extends BaseController
             'ruleset_id:int',
         ]);
 
-        $checks = [
-            'beatmap_hash' => fn (string $value): bool => $value === $beatmap->checksum,
-            'ruleset_id' => fn (int $value): bool => Beatmap::modeStr($value) !== null && $beatmap->canBeConvertedTo($value),
-        ];
-        foreach ($checks as $key => $testFn) {
-            if (!isset($params[$key])) {
-                throw new InvariantException("missing {$key}");
-            }
-            if (!$testFn($params[$key])) {
-                throw new InvariantException("invalid {$key}");
-            }
+        if($beatmapId > 0){
+            dump($beatmapId);
+            die();
+            $beatmap = Beatmap::increasesStatistics()->findOrFail($beatmapId);
         }
+        else
+            $beatmap = Beatmap::increasesStatistics()->where('checksum', $params['beatmap_hash'])->firstOrFail();
+
+        // $checks = [
+        //     'beatmap_hash' => fn (string $value): bool => $value === $beatmap->checksum,
+        //     'ruleset_id' => fn (int $value): bool => Beatmap::modeStr($value) !== null && $beatmap->canBeConvertedTo($value),
+        // ];
+        // foreach ($checks as $key => $testFn) {
+        //     if (!isset($params[$key])) {
+        //         throw new InvariantException("missing {$key}");
+        //     }
+        //     if (!$testFn($params[$key])) {
+        //         throw new InvariantException("invalid {$key}");
+        //     }
+        // }
 
         $buildId = ClientCheck::parseToken($request)['buildId'];
 

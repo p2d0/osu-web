@@ -309,6 +309,7 @@ class BeatmapsetSearch extends RecordSearch
             'bpm' => ['field' => 'bpm', 'type' => 'range'],
             'countNormal' => ['field' => 'beatmaps.countNormal', 'type' => 'range'],
             'countSlider' => ['field' => 'beatmaps.countSlider', 'type' => 'range'],
+            'maxCombo' => ['field' => 'beatmaps.max_combo', 'type' => 'range'],
             'created' => ['field' => 'submit_date', 'type' => 'range'],
             'cs' => ['field' => 'beatmaps.diff_size', 'type' => 'range'],
             'difficultyRating' => ['field' => 'beatmaps.difficultyrating', 'type' => 'range'],

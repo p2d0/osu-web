@@ -51,6 +51,9 @@
           "countNormal": {
             "type": "long"
           },
+          "max_combo": {
+            "type": "long"
+          },
           "countSlider": {
             "type": "long"
           },

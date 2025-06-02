@@ -116,7 +116,6 @@ class BeatmapSeeder extends Seeder
     private function createBeatmap($json)
     {
         $user = $this->randomUser();
-
         return Beatmap::create([
             'beatmap_id' => $json->beatmap_id,
             'beatmapset_id' => $json->beatmapset_id,
@@ -128,6 +127,7 @@ class BeatmapSeeder extends Seeder
             'bpm' => $json->bpm,
             'countNormal' => round(intval($json->max_combo) - (0.2 * intval($json->max_combo))),
             'countSlider' => round(intval($json->max_combo) - (0.8 * intval($json->max_combo))),
+            'max_combo' => $json->max_combo,
             'countSpinner' => 1,
             'diff_drain' => $json->diff_drain,
             'diff_size' => $json->diff_size,

@@ -10,6 +10,7 @@ use App\Libraries\ClientCheck;
 use App\Models\ScoreToken;
 use App\Models\Solo\Score;
 use App\Transformers\ScoreTransformer;
+use App\Models\Beatmap;
 use DB;
 
 class ScoresController extends BaseController
@@ -23,6 +24,12 @@ class ScoresController extends BaseController
     {
         $request = \Request::instance();
         $clientTokenData = ClientCheck::parseToken($request);
+        $params = get_params($request->all(), null, [
+            'checksum:string'
+        ]);
+        if($beatmapId <= 0)
+            $beatmapId = Beatmap::where('checksum', $params['checksum'])->first()->beatmap_id;
+
         $score = DB::transaction(function () use ($beatmapId, $request, $tokenId) {
             $user = auth()->user();
             $scoreToken = ScoreToken::where([

@@ -88,3 +88,5 @@ composer-installer
 
 /database/ip2asn/*.idx
 /database/ip2asn/*.tsv
+.aider*
+.env

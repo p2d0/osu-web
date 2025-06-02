@@ -21,6 +21,7 @@ class BeatmapsetSearchParams extends SearchParams
     public ?array $bpm = null;
     public ?array $countNormal = null;
     public ?array $countSlider = null;
+    public ?array $maxCombo = null;
     public ?array $created = null;
     public ?string $creator = null;
     public ?array $cs = null;

@@ -14,9 +14,11 @@ use App\Libraries\Score\UserRank;
 use App\Libraries\Search\ScoreSearch;
 use App\Libraries\Search\ScoreSearchParams;
 use App\Models\Beatmap;
+use App\Models\Beatmapset; 
 use App\Models\User;
 use App\Transformers\BeatmapTransformer;
 use App\Transformers\ScoreTransformer;
+use Carbon\Carbon;
 
 /**
  * @group Beatmaps
@@ -46,17 +48,109 @@ class BeatmapsController extends Controller
 
     private static function beatmapScores(string $id, ?string $scoreTransformerType, ?bool $isLegacy): array
     {
-        $beatmap = Beatmap::findOrFail($id);
-        if ($beatmap->approved <= 0) {
-            return ['scores' => []];
-        }
-
         $params = get_params(request()->all(), null, [
             'limit:int',
             'mode',
             'mods:string[]',
             'type:string',
+            'user_id:int',
+            'beatmapset_id:int',
+            'beatmapset_creator:string',
+            'beatmapset_artist:string',
+            'beatmapset_title:string',
+            'beatmapset_source:string',
+            'beatmapset_tags:string',
+            'beatmapset_bpm:float',
+            'beatmapset_approved_date:string',
+            'genre_id:int',
+            'language_id:int',
+            'difficulty:string',
+            'favourite_count:int',
+            'star_rating:float',
+            'beatmapset_star_difficulty:float',
+            'beatmapset_length:int',
+            'checksum:string',
+            'total_length:int',
+            'hit_length:int',
+            'bpm:float',
+            'max_combo:int',
+            'count_spinner:int',
+            'diff_drain:float',
+            'diff_size:float',
+            'diff_overall:float',
+            'diff_approach:float',
+            'playcount:int',
+            'passcount:int'
         ], ['null_missing' => true]);
+
+        if($id != 0)
+            $beatmap = Beatmap::find($id);
+        else
+            $beatmap = Beatmap::where('checksum', $params['checksum'])->first();
+
+        if($params['beatmapset_id'])
+            $beatmapset = Beatmapset::find($params['beatmapset_id']);
+
+        if ($params['beatmapset_id'] && !$beatmapset) {
+            Beatmapset::create([
+                'beatmapset_id' => $params['beatmapset_id'],
+                'creator' => $params['beatmapset_creator'],
+                'artist' => $params['beatmapset_artist'],
+                'title' => $params['beatmapset_title'],
+                'displaytitle' => $params['beatmapset_title'],
+                'source' => $params['beatmapset_source'],
+                'tags' => $params['beatmapset_tags'] ?? '',
+                'bpm' => $params['beatmapset_bpm'],
+                'approved' => 1,
+                'approved_date' => $params['beatmapset_approved_date'] ?? null,
+                // 'genre_id' => $params['genre_id'] ?? 0,
+                // 'language_id' => $params['language_id'] ?? 0,
+                'versions_available' => 1,
+                'difficulty_names' => $params['difficulty'] ?? '',
+                'play_count' => 0,
+                'favourite_count' => $params['favourite_count'] ?? 0,
+                'user_id' => 1,
+                'submit_date' => Carbon::now(),
+                'approved_date' => Carbon::now()
+                // 'star_rating' => $params['star_rating'] ?? 0,
+                // 'beatmapset_star_difficulty' => $params['beatmapset_star_difficulty'] ?? 0,
+                // 'beatmapset_length' => $params['beatmapset_length'] ?? 0
+            ]);
+            // dump($beatmapset);
+        }
+
+        if (!$beatmap) {
+            $beatmap = Beatmap::create([
+                'beatmap_id' => $id ?? null,
+                'beatmapset_id' => $params['beatmapset_id'] ?? null,
+                'checksum' => $params['checksum'] ?? '',
+                'version' => $params['difficulty'] ?? '',
+                'total_length' => $params['total_length'] ?? 0,
+                'hit_length' => $params['hit_length'] ?? 0,
+                'bpm' => $params['bpm'] ?? 0,
+                'countNormal' => round(intval($params['max_combo'] ?? 0) - (0.2 * intval($params['max_combo'] ?? 0))),
+                'countSlider' => round(intval($params['max_combo'] ?? 0) - (0.8 * intval($params['max_combo'] ?? 0))),
+                'max_combo' => $params['max_combo'] ?? 0,
+                'countSpinner' => $params['count_spinner'] ?? 1,
+                'diff_drain' => $params['diff_drain'] ?? 0,
+                'diff_size' => $params['diff_size'] ?? 0,
+                'diff_overall' => $params['diff_overall'] ?? 0,
+                'diff_approach' => $params['diff_approach'] ?? 0,
+                // 'playmode' => $params['mode'] ?? '',
+                'approved' => true,
+                'difficultyrating' => $params['star_rating'] ?? 0,
+                'playcount' => $params['playcount'] ?? 0,
+                'passcount' => $params['passcount'] ?? 0,
+                'user_id' => 1
+            ]);
+            $id = $beatmap->beatmap_id;
+        }
+
+        // $beatmap = Beatmap::findOrFail($id);
+        if ($beatmap->approved <= 0) {
+            return ['scores' => []];
+        }
+
 
         $rulesetId = static::getRulesetId($params['mode']) ?? $beatmap->playmode;
         $mods = array_values(array_filter($params['mods'] ?? []));

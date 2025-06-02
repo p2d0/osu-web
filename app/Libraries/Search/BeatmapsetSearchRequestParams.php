@@ -211,6 +211,7 @@ class BeatmapsetSearchRequestParams extends BeatmapsetSearchParams
             'artist' => 'artist',
             'bpm' => 'bpm',
             'circles' => 'countNormal',
+            'combo' => 'maxCombo',
             'created' => 'created',
             'creator' => 'creator',
             'cs' => 'cs',

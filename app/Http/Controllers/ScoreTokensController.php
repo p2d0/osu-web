@@ -34,8 +34,6 @@ class ScoreTokensController extends BaseController
         ]);
 
         if($beatmapId > 0){
-            dump($beatmapId);
-            die();
             $beatmap = Beatmap::increasesStatistics()->findOrFail($beatmapId);
         }
         else

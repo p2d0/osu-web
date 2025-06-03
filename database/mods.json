@@ -508,6 +508,36 @@
             "Type": "number",
             "Label": "Seed",
             "Description": "Use a custom seed instead of a random one"
+          },
+          {
+            "Name": "aim_distance_multiplier",
+            "Type": "number",
+            "Label": "Aim Distance Multiplier",
+            "Description": "How much bigger the distance"
+          },
+          {
+            "Name": "stream_distance_multiplier",
+            "Type": "number",
+            "Label": "Stream Distance Multiplier",
+            "Description": "How much bigger the distance"
+          },
+          {
+            "Name": "stream_distance",
+            "Type": "number",
+            "Label": "Stream Distance",
+            "Description": "How much bigger the distance"
+          },
+          {
+            "Name": "hardcore",
+            "Type": "boolean",
+            "Label": "Hard random",
+            "Description": "Remove circle padding and unnecessary shifting"
+          },
+          {
+            "Name": "squareish",
+            "Type": "boolean",
+            "Label": "Squarish angle",
+            "Description": "Squarish angle"
           }
         ],
         "IncompatibleMods": [

@@ -538,6 +538,12 @@
             "Type": "boolean",
             "Label": "Squarish angle",
             "Description": "Squarish angle"
+          },
+          {
+            "Name": "angle",
+            "Type": "number",
+            "Label": "Angle",
+            "Description": "Angle selector"
           }
         ],
         "IncompatibleMods": [

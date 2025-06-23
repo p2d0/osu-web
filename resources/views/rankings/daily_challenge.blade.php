@@ -4,8 +4,7 @@
 --}}
 @extends('rankings.index', [
     'hasMode' => false,
-    'hasPager' => true,
-    'type' => 'daily_challenge',
+    'params' => ['type' => 'daily_challenge'],
     'titlePrepend' => osu_trans('rankings.type.daily_challenge').': '.$currentRoomOption['text'],
 ])
 
@@ -14,23 +13,11 @@
 @endphp
 @section('ranking-header')
     <div class="osu-page osu-page--ranking-info">
-        <div class="js-react--basic-select-options">
-            <div class="select-options">
-                <div class="select-options__select">
-                    <span class="select-options__option">
-                        {{ $currentRoomOption['text'] }}
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <script id="json-basic-select-options" type="application/json">
-            {!! json_encode([
-                'currentItem' => $currentRoomOption,
-                'items' => $roomOptions,
-                'type' => 'daily_challenge',
-            ]) !!}
-        </script>
+        @include('objects._basic_select_options', ['selectOptions' => [
+            'currentItem' => $currentRoomOption,
+            'items' => $roomOptions,
+            'type' => 'daily_challenge',
+        ]])
 
         <div class="grid-items grid-items--ranking-info-bar">
             <div class="counter-box counter-box--ranking">

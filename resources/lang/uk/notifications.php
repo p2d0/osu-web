@@ -20,17 +20,19 @@ return [
         'channel' => 'чат',
         'forum_topic' => 'форум',
         'news_post' => 'новини',
+        'team' => 'команда',
         'user' => 'профіль',
     ],
 
     'filters' => [
         '_' => 'усе',
-        'user' => 'профіль',
         'beatmapset' => 'мапи',
-        'forum_topic' => 'форум',
-        'news_post' => 'новини',
         'build' => 'збiрки',
         'channel' => 'чат',
+        'forum_topic' => 'форум',
+        'news_post' => 'новини',
+        'team' => 'команда',
+        'user' => 'профіль',
     ],
 
     'item' => [
@@ -121,6 +123,16 @@ return [
                     'channel_message_group' => 'від :username',
                 ],
             ],
+
+            'channel_team' => [
+                '_' => '',
+
+                'team' => [
+                    'channel_team' => '',
+                    'channel_team_compact' => '',
+                    'channel_team_group' => '',
+                ],
+            ],
         ],
 
         'build' => [
@@ -156,6 +168,22 @@ return [
                 '_' => 'Нова відповідь на форумі',
                 'forum_topic_reply' => ':username відповів в темі ":title".',
                 'forum_topic_reply_compact' => ':username відповів',
+            ],
+        ],
+
+        'team' => [
+            'team_application' => [
+                '_' => 'Запит на вступ до команди',
+
+                'team_application_accept' => "Тепер ви член команди :title",
+                'team_application_accept_compact' => "Тепер ви член команди :title",
+
+                'team_application_group' => '',
+
+                'team_application_reject' => 'Ваш запит на вступ до команди :title був відхилений',
+                'team_application_reject_compact' => 'Ваш запит на вступ до команди :title був відхилений',
+                'team_application_store' => '',
+                'team_application_store_compact' => '',
             ],
         ],
 
@@ -217,11 +245,13 @@ return [
 
         'channel' => [
             'announcement' => [
-                'announce' => 'Нове оголошення в ":name"',
+                'channel_announcement' => '',
             ],
-
             'channel' => [
-                'pm' => 'Ви отримали нове повідомлення від :username',
+                'channel_message' => '',
+            ],
+            'channel_team' => [
+                'channel_team' => '',
             ],
         ],
 
@@ -240,6 +270,14 @@ return [
         'forum_topic' => [
             'forum_topic_reply' => [
                 'forum_topic_reply' => 'Є нові відповіді в ":title"',
+            ],
+        ],
+
+        'team' => [
+            'team_application' => [
+                'team_application_accept' => "Тепер ви член команди :title",
+                'team_application_reject' => 'Ваш запит на вступ до команди :title був відхилений',
+                'team_application_store' => '',
             ],
         ],
 

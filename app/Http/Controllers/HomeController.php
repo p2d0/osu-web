@@ -13,10 +13,12 @@ use App\Libraries\Search\QuickSearch;
 use App\Models\BeatmapDownload;
 use App\Models\Beatmapset;
 use App\Models\Forum\Post;
+use App\Models\Multiplayer\Room;
 use App\Models\NewsPost;
 use App\Models\UserDonation;
 use App\Transformers\MenuImageTransformer;
 use Auth;
+use Carbon\CarbonImmutable;
 use Jenssegers\Agent\Agent;
 use Request;
 
@@ -104,11 +106,14 @@ class HomeController extends Controller
             $newBeatmapsets = Beatmapset::latestRanked();
             $popularBeatmapsets = Beatmapset::popular()->get();
 
+            $dailyChallenge = Room::dailyChallengeFor(CarbonImmutable::now());
+
             return ext_view('home.user', compact(
                 'menuImages',
                 'newBeatmapsets',
                 'news',
-                'popularBeatmapsets'
+                'popularBeatmapsets',
+                'dailyChallenge',
             ));
         } else {
             $news = json_collection($news, 'NewsPost');
@@ -140,15 +145,15 @@ class HomeController extends Controller
                     continue;
                 }
                 $result[$mode]['total'] = $search->count();
+                if (QuickSearch::MODES[$mode]['size'] !== 0) {
+                    $transformer = QuickSearch::MODES[$mode]['transformer'];
+                    $result[$mode]['items'] = json_collection(
+                        $search->data(),
+                        new $transformer['class'](),
+                        $transformer['includes'],
+                    );
+                }
             }
-
-            $result['user']['users'] = json_collection($searches['user']->data(), 'UserCompact', [
-                'country',
-                'cover',
-                'groups',
-                'support_level',
-            ]);
-            $result['beatmapset']['beatmapsets'] = json_collection($searches['beatmapset']->data(), 'Beatmapset', ['beatmaps']);
         }
 
         return $result;
@@ -184,8 +189,11 @@ class HomeController extends Controller
         $currentUser = Auth::user();
         $allSearch = new AllSearch(Request::all(), ['user' => $currentUser]);
 
-        if ($allSearch->getMode() === 'beatmapset') {
-            return ujs_redirect(route('beatmapsets.index', ['q' => $allSearch->getRawQuery()]));
+        switch ($allSearch->getMode()) {
+            case 'artist_track':
+                return ujs_redirect(route('artists.tracks.index', ['query' => $allSearch->getRawQuery()]));
+            case 'beatmapset':
+                return ujs_redirect(route('beatmapsets.index', ['q' => $allSearch->getRawQuery()]));
         }
 
         $isSearchPage = true;
@@ -210,7 +218,7 @@ class HomeController extends Controller
             ]);
         }
 
-        return ext_view('layout.ujs-reload', [], 'js')
+        return ext_view('layout.ujs_full_reload', [], 'js')
             ->withCookie(cookie()->forever('locale', $newLocale));
     }
 
@@ -255,8 +263,8 @@ class HomeController extends Controller
 
                 $lastTagPurchaseDate ??= $expiration->copy()->subMonths(1);
 
-                $total = max(1, $expiration->diffInDays($lastTagPurchaseDate));
-                $used = $lastTagPurchaseDate->diffInDays();
+                $total = max(1, $lastTagPurchaseDate->diffInDays($expiration));
+                $used = max(1, $lastTagPurchaseDate->diffInDays());
 
                 $supporterStatus['remainingPercent'] = 100 - round($used / $total * 100, 2);
             }

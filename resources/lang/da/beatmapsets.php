@@ -140,6 +140,7 @@ return [
             'description' => 'Beskrivelse',
             'genre' => 'Genre',
             'language' => 'Sprog',
+            'mapper_tags' => '',
             'no_scores' => 'Data er stadig ved at blive beregnet...',
             'nominators' => '',
             'nsfw' => 'Eksplicit indhold',
@@ -148,7 +149,7 @@ return [
             'source' => 'Kilde',
             'storyboard' => 'Dette beatmap indeholder storyboard',
             'success-rate' => 'Succesrate',
-            'tags' => 'Tags',
+            'user_tags' => '',
             'video' => 'Dette beatmap indeholder video',
         ],
 
@@ -171,6 +172,7 @@ return [
             'global' => 'Global Rang',
             'supporter-link' => 'Klik <a href=":link">here</a> for at se alle de fede fordele du kan få!',
             'supporter-only' => 'Du skal være supporter for at få adgang til venne- og landerangering!',
+            'team' => '',
             'title' => 'Scoreboard',
 
             'headers' => [
@@ -192,6 +194,7 @@ return [
                 'friend' => 'Ingen af dine venner har sat en score på dette map endnu!',
                 'global' => 'Ingen scores endnu. Måske skulle du prøve at sætte en?',
                 'loading' => 'Indlæser scores...',
+                'team' => '',
                 'unranked' => 'Ikke-ranked beatmap.',
             ],
             'score' => [

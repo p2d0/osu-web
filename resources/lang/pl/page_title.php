@@ -80,14 +80,14 @@ return [
             'support_the_game' => 'wspomóż grę',
             'testflight' => 'testflight',
         ],
+        'legacy_matches_controller' => [
+            '_' => '',
+        ],
         'legal_controller' => [
             '_' => 'informacje',
         ],
         'livestreams_controller' => [
             '_' => 'na żywo',
-        ],
-        'matches_controller' => [
-            '_' => 'mecze',
         ],
         'news_controller' => [
             '_' => 'aktualności',
@@ -108,14 +108,17 @@ return [
             '_' => 'rankingi',
         ],
         'teams_controller' => [
-            '_' => '',
-            'show' => '',
+            '_' => 'zespoły',
+            'create' => 'Utwórz drużynę',
+            'edit' => 'Ustawienia drużyny',
+            'leaderboard' => 'Tabela wyników drużyny',
+            'show' => 'informacje o zespole',
         ],
         'tournaments_controller' => [
             '_' => 'turnieje',
         ],
         'user_cover_presets_controller' => [
-            '_' => '',
+            '_' => 'ustawienia okładki użytkownika',
         ],
         'users_controller' => [
             '_' => 'informacje o użytkowniku',
@@ -133,6 +136,11 @@ return [
     ],
     'store' => [
         '_' => 'sklep',
+    ],
+    'teams' => [
+        'members_controller' => [
+            'index' => 'Członkowie drużyny',
+        ],
     ],
     'users' => [
         'modding_history_controller' => [

@@ -20,17 +20,19 @@ return [
         'channel' => 'tchat',
         'forum_topic' => 'forum',
         'news_post' => 'news',
+        'team' => 'équipe',
         'user' => 'profil',
     ],
 
     'filters' => [
         '_' => 'tout',
-        'user' => 'profil',
         'beatmapset' => 'beatmaps',
-        'forum_topic' => 'forum',
-        'news_post' => 'news',
         'build' => 'versions',
         'channel' => 'tchat',
+        'forum_topic' => 'forum',
+        'news_post' => 'news',
+        'team' => 'équipe',
+        'user' => 'profil',
     ],
 
     'item' => [
@@ -121,6 +123,16 @@ return [
                     'channel_message_group' => 'de :username',
                 ],
             ],
+
+            'channel_team' => [
+                '_' => '',
+
+                'team' => [
+                    'channel_team' => '',
+                    'channel_team_compact' => '',
+                    'channel_team_group' => '',
+                ],
+            ],
         ],
 
         'build' => [
@@ -156,6 +168,22 @@ return [
                 '_' => 'Nouvelle réponse du forum',
                 'forum_topic_reply' => ':username a répondu à ":title"',
                 'forum_topic_reply_compact' => ':username a répondu',
+            ],
+        ],
+
+        'team' => [
+            'team_application' => [
+                '_' => 'Demander à rejoindre',
+
+                'team_application_accept' => "Vous faites désormais partie de l'équipe :title",
+                'team_application_accept_compact' => "Vous faites désormais partie de l'équipe :title",
+
+                'team_application_group' => '',
+
+                'team_application_reject' => 'Votre demande pour rejoindre l\'équipe :title a été refusée',
+                'team_application_reject_compact' => 'Votre demande pour rejoindre l\'équipe :title a été refusée',
+                'team_application_store' => '',
+                'team_application_store_compact' => '',
             ],
         ],
 
@@ -217,11 +245,13 @@ return [
 
         'channel' => [
             'announcement' => [
-                'announce' => 'Il y a une nouvelle annonce dans ":name"',
+                'channel_announcement' => '',
             ],
-
             'channel' => [
-                'pm' => 'Vous avez reçu un nouveau message de :username',
+                'channel_message' => '',
+            ],
+            'channel_team' => [
+                'channel_team' => '',
             ],
         ],
 
@@ -240,6 +270,14 @@ return [
         'forum_topic' => [
             'forum_topic_reply' => [
                 'forum_topic_reply' => 'Il y a de nouvelles réponses dans ":title"',
+            ],
+        ],
+
+        'team' => [
+            'team_application' => [
+                'team_application_accept' => "Vous faites désormais partie de l'équipe :title",
+                'team_application_reject' => 'Votre demande pour rejoindre l\'équipe :title a été refusée',
+                'team_application_store' => '',
             ],
         ],
 

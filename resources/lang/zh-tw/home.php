@@ -26,6 +26,9 @@ return [
         'placeholder' => '請輸入以搜尋',
         'title' => '搜尋',
 
+        'artist_track' => [
+            'more_simple' => '',
+        ],
         'beatmapset' => [
             'login_required' => '登入以搜尋圖譜',
             'more' => '搜尋到 :count 張圖譜',
@@ -51,10 +54,16 @@ return [
 
         'mode' => [
             'all' => '所有',
+            'artist_track' => '',
             'beatmapset' => '圖譜',
             'forum_post' => '論壇',
+            'team' => '',
             'user' => '玩家',
             'wiki_page' => 'wiki',
+        ],
+
+        'team' => [
+            'more_simple' => '',
         ],
 
         'user' => [
@@ -91,7 +100,7 @@ return [
 
         'help' => [
             '_' => '如果您在啟動遊戲或註冊帳號時遇到問題，請:help_forum_link或:support_button。',
-            'help_forum_link' => '查看幫助論壇',
+            'help_forum_link' => '查看說明論壇',
             'support_button' => '聯絡支援團隊',
         ],
 

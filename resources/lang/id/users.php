@@ -15,11 +15,11 @@ return [
         ],
 
         'events' => [
-            'title_recent' => 'Peristiwa terbaru',
+            'title_recent' => 'Peristiwa terkini',
         ],
 
         'posts' => [
-            'title_recent' => 'Postingan terbaru',
+            'title_recent' => 'Postingan terkini',
         ],
 
         'votes_received' => [
@@ -64,7 +64,7 @@ return [
             'username' => 'nama pengguna',
 
             'tos_notice' => [
-                '_' => 'dengan membuat akun, anda menyatakan diri setuju dengan :link yang berlaku',
+                '_' => 'dengan membuat akun, kamu menyatakan diri setuju dengan :link yang berlaku',
                 'link' => 'ketentuan layanan',
             ],
         ],
@@ -72,10 +72,10 @@ return [
 
     'disabled' => [
         'title' => 'Uh-oh! Sepertinya akunmu telah dinonaktifkan.',
-        'warning' => "Apabila kamu melanggar peraturan, akunmu akan ditempatkan pada masa percobaan selama satu bulan, di mana dalam rentang waktu ini kami tidak akan menanggapi permintaan apa pun yang terkait dengan akun Anda. Setelah masa ini berakhir, Anda baru akan dapat menghubungi kami untuk mengembalikan akunmu. Mohon diperhatikan bahwa membuat akun baru <strong>hanya akan menambah masa hukumanmu</strong>, dan <strong>masa hukumanmu akan bertambah panjang untuk setiap akun baru yang kamu buat</strong>. Kami harap kamu dapat belajar dari kesalahanmu!",
+        'warning' => "Apabila kamu melanggar peraturan, akunmu akan ditempatkan pada masa tenggang selama satu bulan, di mana dalam rentang waktu ini kami tidak akan menanggapi permintaan banding apa pun yang terkait dengan akun kamu. Setelah masa ini berakhir, kamu baru akan dapat menghubungi kami untuk mengembalikan akunmu. Mohon diperhatikan bahwa membuat akun baru setelah akun utamamu dinonaktifkan <strong>hanya akan memperpanjang masa hukumanmu selama satu bulan</strong>, dan <strong>pelanggaranmu akan semakin berat untuk setiap akun baru yang kamu buat</strong>. Kami harap kamu dapat belajar dari kesalahanmu!",
 
         'if_mistake' => [
-            '_' => 'Apabila kamu merasa bahwa hal ini merupakan sebuah kesalahan, kamu dipersilakan untuk menghubungi kami (baik melalui :email atau tombol "?" yang terletak pada pojok kanan bawah halaman ini) secara langsung. Mohon diperhatikan bahwa kami selalu sepenuhnya yakin akan seluruh tindakan kami, karena segala sesuatunya selalu kami dasarkan pada data yang konkrit. Kami berhak untuk tidak menindaklanjuti aduanmu apabila kami merasa kamu dengan sengaja telah berbohong kepada kami.',
+            '_' => 'Apabila kamu merasa bahwa hal ini merupakan sebuah kesalahan, kamu dipersilakan untuk menghubungi kami (baik melalui :email atau tombol "?" yang terletak pada pojok kanan bawah halaman ini) secara langsung. Mohon diperhatikan bahwa kami selalu sepenuhnya yakin akan seluruh tindakan kami, karena segala sesuatunya selalu kami dasarkan pada data yang konkrit. Kami berhak untuk tidak menindaklanjuti aduanmu apabila kami merasa kamu telah dengan sengaja berbohong kepada kami.',
             'email' => 'email',
         ],
 
@@ -161,12 +161,13 @@ return [
 
         'options' => [
             'cheating' => 'Melakukan kecurangan',
-            'multiple_accounts' => 'Menggunakan lebih dari satu akun',
+            'inappropriate_chat' => 'Berperilaku tidak pantas dalam chat',
             'insults' => 'Menghina saya / orang lain',
-            'spam' => 'Spam',
-            'unwanted_content' => 'Menautkan konten yang tidak pantas',
+            'multiple_accounts' => 'Menggunakan lebih dari satu akun',
             'nonsense' => 'Beromong kosong',
             'other' => 'Lainnya (ketik di bawah)',
+            'spam' => 'Spam',
+            'unwanted_content' => 'Menautkan konten yang tidak pantas',
         ],
     ],
     'restricted_banner' => [
@@ -197,16 +198,16 @@ return [
             'to_1' => 'Tampilkan sampul',
         ],
         'daily_challenge' => [
-            'daily' => 'Rantai Permainan Harian',
-            'daily_streak_best' => 'Rantai Permainan Harian Terbaik',
-            'daily_streak_current' => 'Rantai Permainan Harian Saat Ini',
-            'playcount' => 'Kontribusi Total',
+            'daily' => 'Rantai Harian',
+            'daily_streak_best' => 'Rantai Harian Terlama',
+            'daily_streak_current' => 'Rantai Harian Saat Ini',
+            'playcount' => 'Jumlah Keikutsertaan',
             'title' => 'Tantangan\nHarian',
             'top_10p_placements' => 'Penempatan 10% Teratas',
             'top_50p_placements' => 'Penempatan 50% Teratas',
-            'weekly' => 'Rantai Permainan Mingguan',
-            'weekly_streak_best' => 'Rantai Permainan Mingguan Terbaik',
-            'weekly_streak_current' => 'Rantai Permainan Mingguan Saat Ini',
+            'weekly' => 'Rantai Mingguan',
+            'weekly_streak_best' => 'Rantai Mingguan Terlama',
+            'weekly_streak_current' => 'Rantai Mingguan Saat Ini',
 
             'unit' => [
                 'day' => ':valuehr',
@@ -217,7 +218,7 @@ return [
             'cover' => [
                 'button' => 'Ubah Sampul Profil',
                 'defaults_info' => 'Pilihan sampul lainnya akan tersedia di masa mendatang',
-                'holdover_remove_confirm' => "Gambar sampul yang sebelumnya dipilih kini sudah tidak lagi tersedia untuk dipilih. Kamu tidak akan dapat memilih kembali gambar ini setelah kamu beralih ke gambar sampul lain. Lanjut?",
+                'holdover_remove_confirm' => "Gambar sampul yang sebelumnya dipilih kini sudah tidak lagi tersedia. Kamu tidak lagi akan dapat memilih gambar ini setelah kamu beralih ke gambar sampul lain. Lanjut?",
                 'title' => 'Sampul',
 
                 'upload' => [
@@ -254,7 +255,7 @@ return [
 
         'extra' => [
             'none' => 'kosong',
-            'unranked' => 'Tidak ada rekam jejak permainan yang tercatat dalam beberapa waktu ke belakang',
+            'unranked' => 'Tidak ada riwayat permainan terkini',
 
             'achievements' => [
                 'achieved-on' => 'Diraih pada :date',
@@ -284,7 +285,7 @@ return [
                     'title' => 'Beatmap Pending',
                 ],
                 'ranked' => [
-                    'title' => 'Beatmap Ranked & Approved',
+                    'title' => 'Beatmap Ranked',
                 ],
             ],
             'discussions' => [
@@ -293,9 +294,9 @@ return [
                 'show_more' => 'lihat lebih banyak diskusi',
             ],
             'events' => [
-                'title' => 'Aktivitas',
-                'title_longer' => 'Aktivitas Terkini',
-                'show_more' => 'lihat lebih banyak aktivitas',
+                'title' => 'Peristiwa',
+                'title_longer' => 'Peristiwa Terkini',
+                'show_more' => 'lihat lebih banyak peristiwa',
             ],
             'historical' => [
                 'title' => 'Historis',
@@ -362,7 +363,7 @@ return [
                 ],
 
                 'total_info' => [
-                    '_' => 'Berdasarkan seberapa besar kontribusi yang telah diberikan oleh pengguna ini dalam hal moderasi beatmap. Kunjungi :link untuk informasi lebih lanjut.',
+                    '_' => 'Berdasarkan seberapa banyak kontribusi yang telah diberikan oleh pengguna ini terhadap moderasi beatmap. Kunjungi :link untuk informasi lebih lanjut.',
                     'link' => 'halaman ini',
                 ],
             ],
@@ -479,6 +480,10 @@ return [
             'global_simple' => 'Peringkat Global',
             'highest' => 'Peringkat tertinggi: :rank pada :date',
         ],
+        'season_stats' => [
+            'division_top_percentage' => ':value teratas',
+            'total_score' => 'Jumlah skor',
+        ],
         'stats' => [
             'hit_accuracy' => 'Akurasi Hit',
             'level' => 'Level :level',
@@ -496,7 +501,7 @@ return [
             'graveyard_beatmapset_count' => 'Beatmap Graveyard',
             'loved_beatmapset_count' => 'Beatmap Loved',
             'pending_beatmapset_count' => 'Beatmap Pending',
-            'ranked_beatmapset_count' => 'Beatmap Ranked & Approved',
+            'ranked_beatmapset_count' => 'Beatmap Ranked',
         ],
     ],
 

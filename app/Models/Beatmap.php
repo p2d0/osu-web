@@ -6,9 +6,9 @@
 namespace App\Models;
 
 use App\Exceptions\InvariantException;
-use App\Jobs\EsDocument;
+use App\Jobs\EsDocumentUnique;
 use App\Libraries\Transactions\AfterCommit;
-use DB;
+use App\Traits\Memoizes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -53,7 +53,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Beatmap extends Model implements AfterCommit
 {
-    use SoftDeletes;
+    use Memoizes, SoftDeletes;
 
     public $convert = false;
 
@@ -165,21 +165,46 @@ class Beatmap extends Model implements AfterCommit
 
     public function scopeWithMaxCombo($query)
     {
-        $mods = BeatmapDifficultyAttrib::NO_MODS;
-        $attrib = BeatmapDifficultyAttrib::MAX_COMBO;
-        $attribTable = (new BeatmapDifficultyAttrib())->tableName();
-        $mode = $this->qualifyColumn('playmode');
-        $id = $this->qualifyColumn('beatmap_id');
+        $valueQuery = BeatmapDifficultyAttrib
+            ::select('value')
+            ->whereColumn([
+                'beatmap_id' => $this->qualifyColumn('beatmap_id'),
+                'mode' => $this->qualifyColumn('playmode'),
+            ])
+            ->where([
+                'attrib_id' => BeatmapDifficultyAttrib::MAX_COMBO,
+                'mods' => BeatmapDifficultyAttrib::NO_MODS,
+            ]);
 
-        return $query
-            ->select(DB::raw("*, (
-                SELECT value
-                FROM {$attribTable}
-                WHERE beatmap_id = {$id}
-                    AND mode = {$mode}
-                    AND mods = {$mods}
-                    AND attrib_id = {$attrib}
-            ) AS attrib_max_combo"));
+        return $query->addSelect(['attrib_max_combo' => $valueQuery]);
+    }
+
+    public function scopeWithUserPlaycount(Builder $query, ?int $userId): Builder
+    {
+        if ($userId === null) {
+            $countQuery = \DB::query()->selectRaw('null');
+        } else {
+            $countQuery = BeatmapPlaycount
+                ::where('user_id', $userId)
+                ->whereColumn('beatmap_id', $this->qualifyColumn('beatmap_id'))
+                ->select('playcount');
+        }
+
+        return $query->addSelect(['user_playcount' => $countQuery]);
+    }
+
+    public function scopeWithUserTagIds($query, ?int $userId)
+    {
+        if ($userId === null) {
+            $tagQuery = \DB::query()->selectRaw('null');
+        } else {
+            $tagQuery = BeatmapTag
+                ::where('user_id', $userId)
+                ->whereColumn('beatmap_id', $this->qualifyColumn('beatmap_id'));
+            $tagQuery->selectRaw("json_arrayagg({$tagQuery->qualifyColumn('tag_id')})");
+        }
+
+        return $query->addSelect(['user_tag_ids' => $tagQuery]);
     }
 
     public function failtimes()
@@ -222,7 +247,7 @@ class Beatmap extends Model implements AfterCommit
         $beatmapset = $this->beatmapset;
 
         if ($beatmapset !== null) {
-            dispatch(new EsDocument($beatmapset));
+            dispatch(new EsDocumentUnique($beatmapset));
         }
     }
 
@@ -234,6 +259,11 @@ class Beatmap extends Model implements AfterCommit
     public function canBeConvertedTo(int $rulesetId)
     {
         return $this->playmode === static::MODES['osu'] || $this->playmode === $rulesetId;
+    }
+
+    public function expireTopTagIds()
+    {
+        \Cache::delete("beatmap_top_tag_ids:{$this->getKey()}");
     }
 
     public function getAttribute($key)
@@ -277,6 +307,7 @@ class Beatmap extends Model implements AfterCommit
             'baseMaxCombo',
             'beatmapDiscussions',
             'beatmapOwners',
+            'beatmapTags',
             'beatmapset',
             'difficulty',
             'difficultyAttribs',
@@ -287,6 +318,25 @@ class Beatmap extends Model implements AfterCommit
             'scoresBestTaiko',
             'user' => $this->getRelationValue($key),
         };
+    }
+
+    public function getUserPlaycount(): int
+    {
+        if (!array_key_exists('user_playcount', $this->attributes)) {
+            throw new \Exception('withUserPlaycount scope is required');
+        }
+
+        return $this->attributes['user_playcount'] ?? 0;
+    }
+
+    /**
+     * Requires calling withUserTagIds scope to populate user_tag_ids
+     *
+     * @return int[]
+     */
+    public function getUserTagIds(): array
+    {
+        return json_decode($this->attributes['user_tag_ids'] ?? '', true) ?? [];
     }
 
     /**
@@ -343,9 +393,38 @@ class Beatmap extends Model implements AfterCommit
         return $maxCombo?->value;
     }
 
+    public function slowTopTagIds(): array
+    {
+        return $this->memoize(__FUNCTION__, function () {
+            $countById = [];
+            foreach ($this->beatmapTags as $vote) {
+                $countById[$vote->tag_id] ??= ['tag_id' => $vote->tag_id, 'count' => 0];
+                $countById[$vote->tag_id]['count']++;
+            }
+            usort($countById, fn ($a, $b) => $a['count'] === $b['count']
+                ? $a['tag_id'] - $b['tag_id']
+                : $b['count'] - $a['count']);
+
+            return array_slice($countById, 0, $GLOBALS['cfg']['osu']['tags']['top_tag_count']);
+        });
+    }
+
     public function status()
     {
         return array_search($this->approved, Beatmapset::STATES, true);
+    }
+
+    public function topTagIds()
+    {
+        // TODO: Add option to multi query when beatmapset requests all tags for beatmaps?
+        return $this->memoize(
+            __FUNCTION__,
+            fn () => \Cache::remember(
+                "beatmap_top_tag_ids:{$this->getKey()}",
+                $GLOBALS['cfg']['osu']['tags']['beatmap_tags_cache_duration'],
+                fn () => $this->beatmapTags()->topTagIds()->limit($GLOBALS['cfg']['osu']['tags']['top_tag_count'])->get()->toArray(),
+            ),
+        );
     }
 
     private function getDifficultyrating()

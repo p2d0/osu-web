@@ -14,7 +14,7 @@ return [
             '403' => '拒绝访问',
             '401' => '权限不足',
             '401-verification' => '账户认证',
-            '405' => '访问方法错误',
+            '405' => '请求被拒绝',
             '422' => '请求无效',
             '429' => '请求过多',
             '500' => '服务器出现了一些问题……',
@@ -80,14 +80,14 @@ return [
             'support_the_game' => '支持 osu!',
             'testflight' => 'testflight 测试',
         ],
+        'legacy_matches_controller' => [
+            '_' => '',
+        ],
         'legal_controller' => [
             '_' => '信息',
         ],
         'livestreams_controller' => [
             '_' => '直播',
-        ],
-        'matches_controller' => [
-            '_' => '比赛',
         ],
         'news_controller' => [
             '_' => '新闻',
@@ -108,8 +108,11 @@ return [
             '_' => '排名',
         ],
         'teams_controller' => [
-            '_' => '',
-            'show' => '',
+            '_' => '战队',
+            'create' => '创建战队',
+            'edit' => '战队设置',
+            'leaderboard' => '战队排行',
+            'show' => '战队信息',
         ],
         'tournaments_controller' => [
             '_' => '比赛',
@@ -133,6 +136,11 @@ return [
     ],
     'store' => [
         '_' => '商店',
+    ],
+    'teams' => [
+        'members_controller' => [
+            'index' => '战队成员',
+        ],
     ],
     'users' => [
         'modding_history_controller' => [

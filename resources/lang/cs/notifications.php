@@ -20,17 +20,19 @@ return [
         'channel' => 'chat',
         'forum_topic' => 'fórum',
         'news_post' => 'novinky',
+        'team' => 'tým',
         'user' => 'profil',
     ],
 
     'filters' => [
         '_' => 'vše',
-        'user' => 'profil',
         'beatmapset' => 'beatmapy',
-        'forum_topic' => 'fórum',
-        'news_post' => 'novinky',
         'build' => 'sestavení',
         'channel' => 'chat',
+        'forum_topic' => 'fórum',
+        'news_post' => 'novinky',
+        'team' => 'tým',
+        'user' => 'profil',
     ],
 
     'item' => [
@@ -121,6 +123,16 @@ return [
                     'channel_message_group' => 'od :username',
                 ],
             ],
+
+            'channel_team' => [
+                '_' => '',
+
+                'team' => [
+                    'channel_team' => '',
+                    'channel_team_compact' => '',
+                    'channel_team_group' => '',
+                ],
+            ],
         ],
 
         'build' => [
@@ -156,6 +168,22 @@ return [
                 '_' => 'Nová odpověď na fórum',
                 'forum_topic_reply' => ':username odpověděl na ":title"',
                 'forum_topic_reply_compact' => ':username odpověděl',
+            ],
+        ],
+
+        'team' => [
+            'team_application' => [
+                '_' => 'Žádost o připojení k týmu',
+
+                'team_application_accept' => "Jsi nyní členem týmu :title",
+                'team_application_accept_compact' => "Jsi nyní členem týmu :title",
+
+                'team_application_group' => '',
+
+                'team_application_reject' => 'Tvoje žádost o připojení k týmu :title byla zamítnuta',
+                'team_application_reject_compact' => 'Tvoje žádost o připojení k týmu :title byla zamítnuta',
+                'team_application_store' => '',
+                'team_application_store_compact' => '',
             ],
         ],
 
@@ -217,11 +245,13 @@ return [
 
         'channel' => [
             'announcement' => [
-                'announce' => 'Nové oznámení v „:name“',
+                'channel_announcement' => '',
             ],
-
             'channel' => [
-                'pm' => 'Obdrželi jste novou zprávu od :username',
+                'channel_message' => '',
+            ],
+            'channel_team' => [
+                'channel_team' => '',
             ],
         ],
 
@@ -240,6 +270,14 @@ return [
         'forum_topic' => [
             'forum_topic_reply' => [
                 'forum_topic_reply' => 'Nové odpovědi v ":title"',
+            ],
+        ],
+
+        'team' => [
+            'team_application' => [
+                'team_application_accept' => "Jsi nyní členem týmu :title",
+                'team_application_reject' => 'Tvoje žádost o připojení k týmu :title byla zamítnuta',
+                'team_application_store' => '',
             ],
         ],
 

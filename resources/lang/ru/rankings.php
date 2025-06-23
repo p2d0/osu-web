@@ -25,7 +25,7 @@ return [
 
     'kudosu' => [
         'total' => 'Получено',
-        'available' => 'Осталось',
+        'available' => 'Доступно',
         'used' => 'Потрачено',
     ],
 
@@ -36,12 +36,12 @@ return [
     'type' => [
         'charts' => 'по чартам (устар.)',
         'country' => 'по странам',
-        'daily_challenge' => 'карта дня',
+        'daily_challenge' => 'по картам дня',
+        'global' => 'мировой',
         'kudosu' => 'по кудосу',
         'multiplayer' => 'в мультиплеере',
-        'performance' => 'по производительности',
-        'score' => 'по очкам',
         'seasons' => 'по сезонам',
+        'team' => 'по командам',
     ],
 
     'seasons' => [
@@ -49,6 +49,9 @@ return [
         'ongoing' => 'Этот сезон все ещё продолжается (плейлисты ещё будут добавляться).',
         'room_count' => 'Количество плейлистов',
         'url' => 'Открыть подробную статью об этом сезоне.',
+        'validation' => [
+            'not_enough_factors' => 'не набрано достаточно критериев для корректного подсчёта очков',
+        ],
     ],
 
     'spotlight' => [
@@ -62,12 +65,14 @@ return [
         'accuracy' => 'Точность',
         'active_users' => 'Активные игроки',
         'country' => 'Страна',
+        'division' => 'Ранг',
+        'members' => 'Участники',
         'play_count' => 'Количество игр',
         'performance' => 'Производительность',
         'total_score' => 'Всего очков',
-        'ranked_score' => 'Рейтинговых очков',
-        'average_score' => 'Сред. очки',
-        'average_performance' => 'Сред. произ.',
+        'ranked_score' => 'Рейтинговые очки',
+        'average_score' => 'Средн. кол. очков',
+        'average_performance' => 'Средн. произв.',
         'ss' => '',
         's' => '',
         'a' => '',

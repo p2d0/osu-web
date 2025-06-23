@@ -161,12 +161,13 @@ return [
 
         'options' => [
             'cheating' => 'Valsspelen',
-            'multiple_accounts' => 'Meerdere accounts gebruiken',
+            'inappropriate_chat' => '',
             'insults' => 'Beledigen van mij / anderen',
-            'spam' => 'Spammen',
-            'unwanted_content' => 'Linken van ongepaste inhoud',
+            'multiple_accounts' => 'Meerdere accounts gebruiken',
             'nonsense' => 'Nonsense',
             'other' => 'Anders (type hieronder)',
+            'spam' => 'Spammen',
+            'unwanted_content' => 'Linken van ongepaste inhoud',
         ],
     ],
     'restricted_banner' => [
@@ -313,8 +314,8 @@ return [
                     'title' => 'Recent gespeeld',
                 ],
                 'replays_watched_counts' => [
-                    'title' => 'Replays Gekeken Geschiedenis',
-                    'count_label' => 'Replays Bekeken',
+                    'title' => 'Kijkgeschiedenis Replays',
+                    'count_label' => 'Aantal Replays Bekeken',
                 ],
             ],
             'kudosu' => [
@@ -389,7 +390,7 @@ return [
                 'title' => 'Multiplayerspellen',
             ],
             'top_ranks' => [
-                'download_replay' => 'Download Replay',
+                'download_replay' => 'Replay Downloaden',
                 'not_ranked' => 'Enkel gerankte beatmaps geven pp.',
                 'pp_weight' => 'gewogen :percentage',
                 'view_details' => 'Details Bekijken',
@@ -478,6 +479,10 @@ return [
             'global' => 'Globale rank voor :mode',
             'global_simple' => 'Wereldwijde Ranking',
             'highest' => 'Hoogste rank: :rank op :date',
+        ],
+        'season_stats' => [
+            'division_top_percentage' => '',
+            'total_score' => '',
         ],
         'stats' => [
             'hit_accuracy' => 'Hit Precisie',

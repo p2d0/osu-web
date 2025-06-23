@@ -80,14 +80,14 @@ return [
             'support_the_game' => 'สนับสนุนเกมนี้',
             'testflight' => 'บินเที่ยว',
         ],
+        'legacy_matches_controller' => [
+            '_' => '',
+        ],
         'legal_controller' => [
             '_' => 'ข้อมูล',
         ],
         'livestreams_controller' => [
             '_' => 'การถ่ายทอดสด',
-        ],
-        'matches_controller' => [
-            '_' => 'แมตซ์',
         ],
         'news_controller' => [
             '_' => 'ข่าวสาร',
@@ -108,8 +108,11 @@ return [
             '_' => 'การจัดอันดับ',
         ],
         'teams_controller' => [
-            '_' => '',
-            'show' => '',
+            '_' => 'ทีม',
+            'create' => 'สร้างทีม',
+            'edit' => 'การตั้งค่าทีม',
+            'leaderboard' => '',
+            'show' => 'ข้อมูลทีม',
         ],
         'tournaments_controller' => [
             '_' => '
@@ -134,6 +137,11 @@ return [
     ],
     'store' => [
         '_' => 'ร้านค้า',
+    ],
+    'teams' => [
+        'members_controller' => [
+            'index' => 'สมาชิกทีม',
+        ],
     ],
     'users' => [
         'modding_history_controller' => [

@@ -34,14 +34,14 @@ return [
     ],
 
     'type' => [
-        'charts' => 'spotlights',
+        'charts' => 'spotlight (versi lawas)',
         'country' => 'negara',
         'daily_challenge' => 'tantangan harian',
+        'global' => 'global',
         'kudosu' => 'kudosu',
         'multiplayer' => 'multiplayer',
-        'performance' => 'performa',
-        'score' => 'skor',
         'seasons' => 'musim',
+        'team' => 'tim',
     ],
 
     'seasons' => [
@@ -49,6 +49,9 @@ return [
         'ongoing' => 'Musim ini sedang berlangsung (ke depannya, akan terdapat lebih banyak playlist untuk dimainkan)',
         'room_count' => 'Jumlah playlist',
         'url' => 'Menampilkan informasi lebih lanjut seputar musim yang dipilih.',
+        'validation' => [
+            'not_enough_factors' => 'faktor skor yang ada tidak cukup untuk perhitungan yang layak',
+        ],
     ],
 
     'spotlight' => [
@@ -62,14 +65,16 @@ return [
         'accuracy' => 'Akurasi',
         'active_users' => 'Pengguna Aktif',
         'country' => 'Negara',
+        'division' => 'Divisi',
+        'members' => 'Anggota',
         'play_count' => 'Jml. Permainan',
         'performance' => 'Total pp',
         'total_score' => 'Total Skor',
         'ranked_score' => 'Skor Ranked',
         'average_score' => 'Skor Rata-Rata',
         'average_performance' => 'pp Rata-Rata',
-        'ss' => '',
-        's' => '',
-        'a' => '',
+        'ss' => 'SS',
+        's' => 'S',
+        'a' => 'A',
     ],
 ];

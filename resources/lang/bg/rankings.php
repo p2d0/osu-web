@@ -37,11 +37,11 @@ return [
         'charts' => 'под прожекторите',
         'country' => 'държава',
         'daily_challenge' => 'предизвикателство',
+        'global' => '',
         'kudosu' => 'kudosu',
         'multiplayer' => 'мултиплейър',
-        'performance' => 'представяне',
-        'score' => 'резултат',
         'seasons' => 'сезони',
+        'team' => 'отбор',
     ],
 
     'seasons' => [
@@ -49,6 +49,9 @@ return [
         'ongoing' => 'Сезонът все още продължава (ще има повече плейлисти).',
         'room_count' => 'Брой плейлисти',
         'url' => 'Повече информация за текущия сезон.',
+        'validation' => [
+            'not_enough_factors' => 'няма достатъчно фактори за оценка за правилно изчисление',
+        ],
     ],
 
     'spotlight' => [
@@ -62,6 +65,8 @@ return [
         'accuracy' => 'Прецизност',
         'active_users' => 'Активни потребители',
         'country' => 'Държава',
+        'division' => 'Дивизия',
+        'members' => 'Членове',
         'play_count' => 'Брой игри',
         'performance' => 'Представяне',
         'total_score' => 'Резултат',

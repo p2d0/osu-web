@@ -4,7 +4,7 @@
 import Mod from 'components/mod';
 import { PlayDetailMenu } from 'components/play-detail-menu';
 import TimeWithTooltip from 'components/time-with-tooltip';
-import { SoloScoreJsonForUser } from 'interfaces/solo-score-json';
+import { ScoreJsonForUser } from 'interfaces/score-json';
 import UserJson from 'interfaces/user-json';
 import * as React from 'react';
 import PpValue from 'scores/pp-value';
@@ -13,14 +13,14 @@ import { getArtist, getTitle } from 'utils/beatmapset-helper';
 import { classWithModifiers } from 'utils/css';
 import { formatNumber } from 'utils/html';
 import { trans } from 'utils/lang';
-import { accuracy, filterMods, hasMenu, rank } from 'utils/score-helper';
+import { accuracy, hasMenu, rank } from 'utils/score-helper';
 import { beatmapUrl } from 'utils/url';
 
 const bn = 'play-detail';
 
 interface Props {
   activated: boolean;
-  score: SoloScoreJsonForUser;
+  score: ScoreJsonForUser;
   showPinSortableHandle?: boolean;
   showPpWeight?: boolean;
   user: UserJson;
@@ -112,7 +112,7 @@ export default class PlayDetail extends React.PureComponent<Props, State> {
           </div>
 
           <div className={`${bn}__score-detail ${bn}__score-detail--mods`}>
-            {filterMods(score).map((mod) => <Mod key={mod.acronym} mod={mod} />)}
+            {score.mods.map((mod) => <Mod key={mod.acronym} mod={mod} />)}
           </div>
 
           <div className={`${bn}__pp`}>

@@ -80,14 +80,14 @@ return [
             'support_the_game' => 'підтримайте гру',
             'testflight' => 'testflight',
         ],
+        'legacy_matches_controller' => [
+            '_' => '',
+        ],
         'legal_controller' => [
             '_' => 'інформація',
         ],
         'livestreams_controller' => [
             '_' => 'прямі трансляції',
-        ],
-        'matches_controller' => [
-            '_' => 'матчі',
         ],
         'news_controller' => [
             '_' => 'новини',
@@ -108,8 +108,11 @@ return [
             '_' => 'рейтинги',
         ],
         'teams_controller' => [
-            '_' => '',
-            'show' => '',
+            '_' => 'команди',
+            'create' => 'створити команду',
+            'edit' => 'налаштування команди',
+            'leaderboard' => 'таблиця лідерів команди',
+            'show' => 'інформація про команду',
         ],
         'tournaments_controller' => [
             '_' => 'турніри',
@@ -133,6 +136,11 @@ return [
     ],
     'store' => [
         '_' => 'крамниця',
+    ],
+    'teams' => [
+        'members_controller' => [
+            'index' => 'члени команди',
+        ],
     ],
     'users' => [
         'modding_history_controller' => [

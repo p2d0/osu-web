@@ -34,6 +34,11 @@ return [
         'title' => 'Laporkan skor :username?',
     ],
 
+    'team' => [
+        'button' => 'Laporkan Tim',
+        'title' => 'Laporkan tim :username?',
+    ],
+
     'user' => [
         'button' => 'Laporkan',
         'title' => 'Laporkan :username?',

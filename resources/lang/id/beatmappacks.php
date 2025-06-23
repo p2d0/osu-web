@@ -17,6 +17,7 @@ return [
     ],
 
     'show' => [
+        'created_by' => 'oleh :author',
         'download' => 'Unduh',
         'item' => [
             'cleared' => 'telah dituntaskan',
@@ -33,7 +34,7 @@ return [
         'chart' => 'Spotlights',
         'featured' => 'Featured Artist',
         'loved' => 'Project Loved',
-        'standard' => 'Standar',
+        'standard' => 'Reguler',
         'theme' => 'Tematik',
         'tournament' => 'Turnamen',
     ],

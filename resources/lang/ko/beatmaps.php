@@ -4,8 +4,10 @@
 // See the LICENCE file in the repository root for full licence text.
 
 return [
+    'invalid_ruleset' => '룰셋이 올바르지 않습니다.',
+
     'change_owner' => [
-        'too_many' => '',
+        'too_many' => '게스트 매퍼가 너무 많아요.',
     ],
 
     'discussion-votes' => [

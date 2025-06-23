@@ -4,6 +4,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 return [
+    'invalid_ruleset' => '',
+
     'change_owner' => [
         'too_many' => '',
     ],
@@ -79,7 +81,7 @@ return [
             'nomination_reset' => 'איפוס מועמדות',
             'praise' => 'שבח',
             'problem' => 'בעיה',
-            'problem_warning' => '',
+            'problem_warning' => 'דווח על בעיה',
             'review' => 'ביקורת',
             'suggestion' => 'הצעה',
         ],
@@ -220,8 +222,8 @@ return [
         'rank_estimate' => [
             '_' => 'מפה זאת תקבל סטטוס Ranked ב:date במידה ולא ימצאו שגיעות. המפה נמצא ב#:position ב:queue.',
             'unresolved_problems' => '',
-            'problems' => '',
-            'on' => '',
+            'problems' => 'הבעיות האלו',
+            'on' => 'ב-:date',
             'queue' => 'נבדקת לקבלת Ranking',
             'soon' => 'בקרוב',
         ],
@@ -252,7 +254,7 @@ return [
                 'genre' => 'ז\'אנר',
                 'language' => 'שפה',
                 'mode' => 'מצב',
-                'nsfw' => '',
+                'nsfw' => 'תוכן חושפני',
                 'played' => 'שוחקה',
                 'rank' => 'דרגה הושגה',
                 'status' => 'קטגוריות',

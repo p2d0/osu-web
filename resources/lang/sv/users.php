@@ -161,12 +161,13 @@ return [
 
         'options' => [
             'cheating' => 'Fusk',
-            'multiple_accounts' => 'Använder flera konton',
+            'inappropriate_chat' => 'Olämpligt chattbeteende',
             'insults' => 'Förolämpar mig / andra',
-            'spam' => 'Spammning',
-            'unwanted_content' => 'Länkar olämpligt innehåll',
+            'multiple_accounts' => 'Använder flera konton',
             'nonsense' => 'Dumheter',
             'other' => 'Andra (skriv nedan)',
+            'spam' => 'Spammning',
+            'unwanted_content' => 'Länkar olämpligt innehåll',
         ],
     ],
     'restricted_banner' => [
@@ -200,8 +201,8 @@ return [
             'daily' => 'Daglig Streak',
             'daily_streak_best' => 'Bästa Dagliga Streak',
             'daily_streak_current' => 'Nuvarande Dagliga Streak',
-            'playcount' => '',
-            'title' => '',
+            'playcount' => 'Totalt deltagande',
+            'title' => 'Daglig\nUtmaning',
             'top_10p_placements' => 'Topp 10% Placeringar',
             'top_50p_placements' => 'Topp 50% Placeringar',
             'weekly' => 'Vecko Streak',
@@ -209,15 +210,15 @@ return [
             'weekly_streak_current' => 'Nuvarande Vecko Streak',
 
             'unit' => [
-                'day' => '',
-                'week' => '',
+                'day' => ':valued',
+                'week' => ':valuew',
             ],
         ],
         'edit' => [
             'cover' => [
                 'button' => 'Ändra Profilomslag',
                 'defaults_info' => 'Fler omslagsalternativ kommer finnas i framtiden',
-                'holdover_remove_confirm' => "",
+                'holdover_remove_confirm' => "Det tidigare valda omslaget kan inte längre väljas. Du kan inte välja tillbaka det efter att du har bytt till ett annat omslag. Vill du fortsätta?",
                 'title' => 'Omslag',
 
                 'upload' => [
@@ -478,6 +479,10 @@ return [
             'global' => 'Global rank för :mode',
             'global_simple' => 'Global rankning',
             'highest' => 'Högsta rank: :rank den :date',
+        ],
+        'season_stats' => [
+            'division_top_percentage' => 'Topp :value',
+            'total_score' => 'Totalpoäng',
         ],
         'stats' => [
             'hit_accuracy' => 'Träffsäkerhet',

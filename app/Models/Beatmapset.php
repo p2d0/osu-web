@@ -10,7 +10,7 @@ use App\Exceptions\BeatmapProcessorException;
 use App\Exceptions\ImageProcessorServiceException;
 use App\Exceptions\InvariantException;
 use App\Jobs\CheckBeatmapsetCovers;
-use App\Jobs\EsDocument;
+use App\Jobs\EsDocumentUnique;
 use App\Jobs\Notifications\BeatmapsetDiscussionLock;
 use App\Jobs\Notifications\BeatmapsetDiscussionUnlock;
 use App\Jobs\Notifications\BeatmapsetDisqualify;
@@ -29,6 +29,7 @@ use App\Libraries\Elasticsearch\Indexable;
 use App\Libraries\ImageProcessorService;
 use App\Libraries\StorageUrl;
 use App\Libraries\Transactions\AfterCommit;
+use App\Models\Forum\Post;
 use App\Traits\Memoizes;
 use App\Traits\Validatable;
 use App\Transformers\BeatmapsetTransformer;
@@ -329,21 +330,18 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
 
     public function scopeWithPackTags(Builder $query): Builder
     {
-        $idColumn = $this->qualifyColumn('beatmapset_id');
-        $packTagColumn = (new BeatmapPack())->qualifyColumn('tag');
-        $packItemBeatmapsetIdColumn = (new BeatmapPackItem())->qualifyColumn('beatmapset_id');
         $packQuery = BeatmapPack
-            ::selectRaw("GROUP_CONCAT({$packTagColumn} SEPARATOR ',')")
-            ->default()
-            ->whereRelation(
+            ::default()
+            ->whereHas(
                 'items',
-                DB::raw($packItemBeatmapsetIdColumn),
-                DB::raw($idColumn),
-            )->toRawSql();
+                fn ($q) => $q->whereColumn(
+                    $q->qualifyColumn('beatmapset_id'),
+                    $this->qualifyColumn('beatmapset_id')
+                ),
+            );
+        $packQuery->selectRaw("GROUP_CONCAT({$packQuery->qualifyColumn('tag')} SEPARATOR ',')");
 
-        return $query
-            ->select('*')
-            ->selectRaw("({$packQuery}) as pack_tags");
+        return $query->addSelect(['pack_tags' => $packQuery]);
     }
 
     public function scopeWithStates($query, $states)
@@ -531,7 +529,7 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
         }
     }
 
-    public function regenerateCovers(array $sizesToRegenerate = null)
+    public function regenerateCovers(?array $sizesToRegenerate = null)
     {
         if (empty($sizesToRegenerate)) {
             $sizesToRegenerate = static::coverSizes();
@@ -603,6 +601,7 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
         $currentTime = Carbon::now();
         $oldScoreable = $this->isScoreable();
         $approvedState = static::STATES[$state];
+        $shouldRecalculateUserRankCounts = $this->isScoreable() && !$this->isQualified() && $approvedState <= 0;
         $beatmaps = $this->beatmaps();
 
         if ($beatmapIds !== null) {
@@ -628,7 +627,7 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
         $beatmaps->update(['approved' => $approvedState]);
 
         if ($this->isQualified() && $state === 'pending') {
-            $this->previous_queue_duration = ($this->queued_at ?? $this->approved_date)->diffinSeconds();
+            $this->previous_queue_duration = (int) ($this->queued_at ?? $this->approved_date)->diffInSeconds();
             $this->queued_at = null;
         } elseif ($this->isPending() && $state === 'qualified') {
             // Check if any beatmaps where added after most recent invalidated nomination.
@@ -649,8 +648,8 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
 
                 // additional penalty for disqualification period, 1 day per week disqualified.
                 if ($disqualifyEvent !== null) {
-                    $interval = $currentTime->diffInDays($disqualifyEvent->created_at);
-                    $penaltyDays = min($interval / 7, $GLOBALS['cfg']['osu']['beatmapset']['maximum_disqualified_rank_penalty_days']);
+                    $interval = (int) $disqualifyEvent->created_at->diffInDays($currentTime);
+                    $penaltyDays = (int) min($interval / 7, $GLOBALS['cfg']['osu']['beatmapset']['maximum_disqualified_rank_penalty_days']);
                     $this->queued_at = $this->queued_at->addDays($penaltyDays);
                 }
             }
@@ -672,7 +671,7 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
 
         if ($this->isScoreable() !== $oldScoreable || $this->isRanked()) {
             dispatch(new RemoveBeatmapsetBestScores($this));
-            dispatch(new RemoveBeatmapsetSoloScores($this));
+            dispatch(new RemoveBeatmapsetSoloScores($this, $shouldRecalculateUserRankCounts));
         }
 
         if ($this->isScoreable() !== $oldScoreable) {
@@ -849,8 +848,6 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
         DB::transaction(function () {
             $this->events()->create(['type' => BeatmapsetEvent::RANK]);
 
-            $this->update(['play_count' => 0]);
-            $this->beatmaps()->update(['playcount' => 0, 'passcount' => 0]);
             $this->setApproved('ranked', null);
             $this->bssProcessQueues()->create();
 
@@ -1210,7 +1207,7 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
             ->count();
         $days = ceil($queueSize / $GLOBALS['cfg']['osu']['beatmapset']['rank_per_day']);
 
-        $minDays = $GLOBALS['cfg']['osu']['beatmapset']['minimum_days_for_rank'] - $this->queued_at->diffInDays();
+        $minDays = $GLOBALS['cfg']['osu']['beatmapset']['minimum_days_for_rank'] - (int) $this->queued_at->diffInDays();
         $days = max($minDays, $days);
 
         return [
@@ -1406,27 +1403,40 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
 
     public function updateDescription($bbcode, $user)
     {
-        $post = $this->descriptionPost;
-        if ($post === null) {
-            return;
-        }
+        return DB::transaction(function () use ($bbcode, $user) {
+            $post = $this->descriptionPost;
 
-        $split = preg_split('/-{15}/', $post->post_text, 2);
+            if ($post === null) {
+                $forum = Forum\Forum::findOrFail($GLOBALS['cfg']['osu']['forum']['beatmap_description_forum_id']);
+                $title = $this->artist.' - '.$this->title;
 
-        $options = [
-            'withGallery' => true,
-            'ignoreLineHeight' => true,
-        ];
+                $topic = Forum\Topic::createNew($forum, [
+                    'title' => $title,
+                    'user' => $user,
+                    'body' => '---------------',
+                ]);
+                $topic->lock();
+                $this->update(['thread_id' => $topic->getKey()]);
+                $post = $topic->firstPost;
+            }
 
-        $header = new BBCodeFromDB($split[0], $post->bbcode_uid, $options);
-        $newBody = $header->toEditor()."---------------\n".ltrim($bbcode);
+            $split = preg_split('/-{15}/', $post->post_text, 2);
 
-        return $post
-            ->skipBeatmapPostRestrictions()
-            ->update([
-                'post_text' => $newBody,
-                'post_edit_user' => $user === null ? null : $user->getKey(),
-            ]);
+            $options = [
+                'withGallery' => true,
+                'ignoreLineHeight' => true,
+            ];
+
+            $header = new BBCodeFromDB($split[0], $post->bbcode_uid, $options);
+            $newBody = $header->toEditor()."---------------\n".ltrim($bbcode);
+
+            return $post
+                ->skipBeatmapPostRestrictions()
+                ->update([
+                    'post_text' => $newBody,
+                    'post_edit_user' => $user === null ? null : $user->getKey(),
+                ]);
+        });
     }
 
     private function extractDescription($post)
@@ -1443,12 +1453,7 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
 
     private function getBBCode()
     {
-        $post = $this->descriptionPost;
-
-        if ($post === null) {
-            return;
-        }
-
+        $post = $this->descriptionPost ?? new Post();
         $description = $this->extractDescription($post);
 
         $options = [
@@ -1502,7 +1507,7 @@ class Beatmapset extends Model implements AfterCommit, Commentable, Indexable, T
 
     public function afterCommit()
     {
-        dispatch(new EsDocument($this));
+        dispatch(new EsDocumentUnique($this));
     }
 
     public function notificationCover()

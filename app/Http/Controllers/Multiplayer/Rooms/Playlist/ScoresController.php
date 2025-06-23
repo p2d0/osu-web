@@ -5,7 +5,6 @@
 
 namespace App\Http\Controllers\Multiplayer\Rooms\Playlist;
 
-use App\Exceptions\InvariantException;
 use App\Http\Controllers\Controller as BaseController;
 use App\Libraries\ClientCheck;
 use App\Models\Multiplayer\PlaylistItem;
@@ -65,7 +64,7 @@ class ScoresController extends BaseController
             ->limit($limit)
             ->getWithHasMore();
 
-        $transformer = ScoreTransformer::newSolo();
+        $transformer = new ScoreTransformer(false);
         $scoresJson = json_collection(
             $highScores->pluck('scoreLink'),
             $transformer,
@@ -128,7 +127,7 @@ class ScoresController extends BaseController
 
         return json_item(
             $scoreLink,
-            ScoreTransformer::newSolo(),
+            new ScoreTransformer(false),
             [
                 ...ScoreTransformer::MULTIPLAYER_BASE_INCLUDES,
                 'position',
@@ -160,7 +159,7 @@ class ScoresController extends BaseController
 
         return json_item(
             $scoreLink,
-            ScoreTransformer::newSolo(),
+            new ScoreTransformer(false),
             [
                 ...ScoreTransformer::MULTIPLAYER_BASE_INCLUDES,
                 'position',
@@ -182,15 +181,11 @@ class ScoresController extends BaseController
         $playlistItem = $room->playlist()->findOrFail($playlistId);
         $user = \Auth::user();
         $request = \Request::instance();
-        $params = $request->all();
 
-        if (get_string($params['beatmap_hash'] ?? null) !== $playlistItem->beatmap->checksum) {
-            throw new InvariantException(osu_trans('score_tokens.create.beatmap_hash_invalid'));
-        }
-
-        $buildId = ClientCheck::parseToken($request)['buildId'];
-
-        $scoreToken = $room->startPlay($user, $playlistItem, $buildId);
+        $scoreToken = $room->startPlay($user, $playlistItem, [
+            ...$request->all(),
+            'build_id' => ClientCheck::parseToken($request)['buildId'],
+        ]);
 
         return json_item($scoreToken, new ScoreTokenTransformer());
     }
@@ -230,7 +225,7 @@ class ScoresController extends BaseController
 
         return json_item(
             $scoreLink,
-            ScoreTransformer::newSolo(),
+            new ScoreTransformer(false),
             [
                 ...ScoreTransformer::MULTIPLAYER_BASE_INCLUDES,
                 'position',

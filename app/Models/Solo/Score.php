@@ -287,7 +287,7 @@ class Score extends Model implements Traits\ReportableInterface
         }
 
         // int (as per es schema)
-        if ($this->total_score === null || $this->total_score < 0 || $this->total_score > 2147483647) {
+        if ($this->total_score === null || $this->total_score <= 0 || $this->total_score > 2147483647) {
             throw new InvariantException('Invalid total_score.');
         }
 
@@ -308,6 +308,11 @@ class Score extends Model implements Traits\ReportableInterface
         if ($this->data->statistics->isEmpty()) {
             throw new InvariantException("field cannot be empty: 'statistics'");
         }
+
+        app('mods')->assertValidExclusivity(
+            $this->ruleset_id,
+            array_column($this->data->mods, 'acronym')
+        );
     }
 
     public function getClassicTotalScore(): int

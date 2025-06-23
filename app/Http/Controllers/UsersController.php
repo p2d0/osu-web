@@ -12,7 +12,6 @@ use App\Libraries\ClientCheck;
 use App\Libraries\RateLimiter;
 use App\Libraries\Search\ForumSearch;
 use App\Libraries\Search\ForumSearchRequestParams;
-use App\Libraries\Search\ScoreSearchParams;
 use App\Libraries\User\FindForProfilePage;
 use App\Libraries\UserRegistration;
 use App\Models\Beatmap;
@@ -179,7 +178,7 @@ class UsersController extends Controller
                 return [
                     'best' => $this->getExtraSection(
                         'scoresBest',
-                        count($this->user->beatmapBestScoreIds($this->mode, ScoreSearchParams::showLegacyForUser(\Auth::user())))
+                        count($this->user->beatmapBestScoreIds($this->mode))
                     ),
                     'firsts' => $this->getExtraSection(
                         'scoresFirsts',
@@ -532,7 +531,7 @@ class UsersController extends Controller
 
         $perPage = $this->perPage;
 
-        if ($type === 'firsts' || $type === 'pinned') {
+        if (in_array($type, ['best', 'firsts', 'pinned'], true)) {
             // Override per page restriction in parsePaginationParams to allow infinite paging
             $perPage = $this->sanitizedLimitParam();
         }
@@ -813,8 +812,7 @@ class UsersController extends Controller
                     $this->mode,
                     $perPage,
                     $offset,
-                    ScoreTransformer::USER_PROFILE_INCLUDES_PRELOAD,
-                    ScoreSearchParams::showLegacyForUser(\Auth::user()),
+                    ScoreTransformer::USER_PROFILE_INCLUDES_PRELOAD
                 );
                 $userRelationColumn = 'user';
                 break;
@@ -922,6 +920,7 @@ class UsersController extends Controller
         $userIncludes = [
             ...UserTransformer::PROFILE_HEADER_INCLUDES,
             'account_history',
+            'current_season_stats',
             'daily_challenge_user_stats',
             'page',
             'pending_beatmapset_count',

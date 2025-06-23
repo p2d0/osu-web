@@ -161,12 +161,13 @@ return [
 
         'options' => [
             'cheating' => 'Cheating',
-            'multiple_accounts' => 'Verwendet mehrere Konten',
+            'inappropriate_chat' => 'Unangemessenes Verhalten im Chat',
             'insults' => 'Beleidigt mich / andere',
-            'spam' => 'Spamming',
-            'unwanted_content' => 'Verlinkt unangemessene Inhalte',
+            'multiple_accounts' => 'Verwendet mehrere Konten',
             'nonsense' => 'Unsinn',
             'other' => 'Anderes (unten angeben)',
+            'spam' => 'Spamming',
+            'unwanted_content' => 'Unangemessene Inhalte',
         ],
     ],
     'restricted_banner' => [
@@ -225,7 +226,7 @@ return [
                     'button' => 'Bild hochladen',
                     'dropzone' => 'Zum Hochladen hier ablegen',
                     'dropzone_info' => 'Du kannst das Bild auch hier ablegen, um es hochzuladen',
-                    'size_info' => 'Banner sollte 2400x640 groß sein',
+                    'size_info' => 'Banner sollte 2000x500 groß sein',
                     'too_large' => 'Datei ist zu groß.',
                     'unsupported_format' => 'Format wird nicht unterstützt.',
 
@@ -309,7 +310,7 @@ return [
                     'title' => 'Meistgespielte Beatmaps',
                 ],
                 'recent_plays' => [
-                    'accuracy' => 'genauigkeit: :percentage',
+                    'accuracy' => 'Genauigkeit: :percentage',
                     'title' => 'Zuletzt gespielt (24h)',
                 ],
                 'replays_watched_counts' => [
@@ -478,6 +479,10 @@ return [
             'global' => 'Globaler Rang im Modus :mode',
             'global_simple' => 'Globaler Rang',
             'highest' => 'Höchster Rang: :rank am :date',
+        ],
+        'season_stats' => [
+            'division_top_percentage' => 'Top :value',
+            'total_score' => 'Gesamtpunktzahl',
         ],
         'stats' => [
             'hit_accuracy' => 'Genauigkeit',

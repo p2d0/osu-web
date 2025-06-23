@@ -12,7 +12,7 @@ import TimeWithTooltip from 'components/time-with-tooltip';
 import UserAvatar from 'components/user-avatar';
 import UserLink from 'components/user-link';
 import BeatmapJson from 'interfaces/beatmap-json';
-import { SoloScoreJsonForBeatmap } from 'interfaces/solo-score-json';
+import { ScoreJsonForBeatmap } from 'interfaces/score-json';
 import { route } from 'laroute';
 import core from 'osu-core-singleton';
 import * as React from 'react';
@@ -21,13 +21,13 @@ import { rulesetName, shouldShowPp } from 'utils/beatmap-helper';
 import { classWithModifiers, Modifiers } from 'utils/css';
 import { formatNumber } from 'utils/html';
 import { trans } from 'utils/lang';
-import { accuracy, filterMods, isPerfectCombo, attributeDisplayTotals, rank, scoreUrl } from 'utils/score-helper';
+import { accuracy, filterMods, isPerfectCombo, calculateStatisticsFor, rank, scoreUrl } from 'utils/score-helper';
 
 interface Props {
   beatmap: BeatmapJson;
   modifiers?: Modifiers;
   position?: number;
-  score: SoloScoreJsonForBeatmap;
+  score: ScoreJsonForBeatmap;
 }
 
 export default class TopCard extends React.PureComponent<Props> {
@@ -160,13 +160,13 @@ export default class TopCard extends React.PureComponent<Props> {
             </div>
 
             <div className='beatmap-score-top__stats beatmap-score-top__stats--wrappable'>
-              {attributeDisplayTotals(ruleset, this.props.score).map((attr) => (
-                <div key={attr.key} className='beatmap-score-top__stat'>
+              {calculateStatisticsFor(this.props.score, 'leaderboard').map((attr) => (
+                <div key={attr.label.short} className='beatmap-score-top__stat'>
                   <div className='beatmap-score-top__stat-header'>
-                    {attr.label}
+                    {attr.label.short}
                   </div>
                   <div className='beatmap-score-top__stat-value beatmap-score-top__stat-value--smaller'>
-                    {formatNumber(attr.total)}
+                    {formatNumber(attr.value)}
                   </div>
                 </div>
               ))}

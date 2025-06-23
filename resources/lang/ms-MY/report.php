@@ -15,7 +15,7 @@ return [
     ],
 
     'comment' => [
-        'button' => 'Lapor',
+        'button' => 'Laporkan',
         'title' => 'Laporkan komen :username?',
     ],
 
@@ -32,6 +32,11 @@ return [
     'scores' => [
         'button' => 'Laporkan Markah',
         'title' => 'Laporkan markah :username?',
+    ],
+
+    'team' => [
+        'button' => 'Laporkan Pasukan',
+        'title' => 'Laporkan pasukan :username?',
     ],
 
     'user' => [

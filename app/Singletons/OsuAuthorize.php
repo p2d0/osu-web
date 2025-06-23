@@ -30,6 +30,7 @@ use App\Models\OAuth\Client;
 use App\Models\Score\Best\Model as ScoreBest;
 use App\Models\Solo;
 use App\Models\Team;
+use App\Models\TeamApplication;
 use App\Models\Traits\ReportableInterface;
 use App\Models\User;
 use App\Models\UserContestEntry;
@@ -47,11 +48,16 @@ class OsuAuthorize
         static $set;
 
         $set ??= new Ds\Set([
+            'ChannelPart',
             'ContestJudge',
             'IsNotOAuth',
             'IsOwnClient',
             'IsSpecialScope',
+            'TeamApplicationAccept',
+            'TeamApplicationStore',
             'TeamPart',
+            'TeamStore',
+            'TeamUpdate',
             'UserUpdateEmail',
         ]);
 
@@ -63,13 +69,7 @@ class OsuAuthorize
         request()->attributes->remove(static::REQUEST_ATTRIBUTE_KEY);
     }
 
-    /**
-     * @param User|null $user
-     * @param string $ability
-     * @param object|null $object
-     * @return AuthorizationResult
-     */
-    public function doCheckUser(?User $user, string $ability, object $object = null): AuthorizationResult
+    public function doCheckUser(?User $user, string $ability, ?object $object = null): AuthorizationResult
     {
         $cacheKey = serialize([
             $ability,
@@ -1041,7 +1041,8 @@ class OsuAuthorize
         $this->ensureCleanRecord($user, $prefix);
 
         // joining multiplayer room is done through room endpoint
-        if ($channel->isMultiplayer()) {
+        // team channel handling is done through team model
+        if ($channel->isMultiplayer() || $channel->isTeam()) {
             return null;
         }
 
@@ -1065,7 +1066,8 @@ class OsuAuthorize
 
         $this->ensureLoggedIn($user);
 
-        if ($channel->type !== Channel::TYPES['private']) {
+        // team channel handling is done through team model
+        if (!$channel->isTeam() && $channel->type !== Channel::TYPES['private']) {
             return 'ok';
         }
 
@@ -1905,6 +1907,48 @@ class OsuAuthorize
         return 'ok';
     }
 
+    public function checkTeamApplicationAccept(?User $user, TeamApplication $application): ?string
+    {
+        $this->ensureLoggedIn($user);
+        $this->ensureCleanRecord($user);
+
+        $team = $application->team;
+
+        if ($team->leader_id !== $user->getKey()) {
+            return null;
+        }
+        if ($team->emptySlots() < 1) {
+            return 'team.application.store.team_full';
+        }
+
+        return 'ok';
+    }
+
+    public function checkTeamApplicationStore(?User $user, Team $team): ?string
+    {
+        $prefix = 'team.application.store.';
+
+        $this->ensureLoggedIn($user);
+        $this->ensureCleanRecord($user);
+
+        if ($user->team !== null) {
+            return $user->team->getKey() === $team->getKey()
+                ? $prefix.'already_member'
+                : $prefix.'already_other_member';
+        }
+        if ($user->teamApplication()->exists()) {
+            return $prefix.'currently_applying';
+        }
+        if (!$team->is_open) {
+            return $prefix.'team_closed';
+        }
+        if ($team->emptySlots() < 1) {
+            return $prefix.'team_full';
+        }
+
+        return 'ok';
+    }
+
     public function checkTeamPart(?User $user, Team $team): ?string
     {
         $this->ensureLoggedIn($user);
@@ -1921,9 +1965,31 @@ class OsuAuthorize
         return 'ok';
     }
 
+    public function checkTeamStore(?User $user): ?string
+    {
+        $this->ensureLoggedIn($user);
+        $this->ensureCleanRecord($user);
+        $this->ensureHasPlayed($user);
+
+        if ($GLOBALS['cfg']['osu']['team']['create_require_supporter'] && !$user->isSupporter()) {
+            return 'team.store.require_supporter_tag';
+        }
+
+        if ($user->team !== null) {
+            return 'team.application.store.already_other_member';
+        }
+
+        if ($user->teamApplication !== null) {
+            return 'team.application.store.currently_applying';
+        }
+
+        return 'ok';
+    }
+
     public function checkTeamUpdate(?User $user, Team $team): ?string
     {
         $this->ensureLoggedIn($user);
+        $this->ensureCleanRecord($user);
 
         return $team->leader_id === $user->getKey() ? 'ok' : null;
     }

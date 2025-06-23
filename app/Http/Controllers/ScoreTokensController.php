@@ -28,9 +28,15 @@ class ScoreTokensController extends BaseController
 
         $user = auth()->user();
         $request = \Request::instance();
-        $params = get_params($request->all(), null, [
-            'beatmap_hash',
-            'ruleset_id:int',
+
+        $scoreToken = new ScoreToken([
+            'beatmap_id' => $beatmap->getKey(),
+            'build_id' => ClientCheck::parseToken($request)['buildId'],
+            'user_id' => $user->getKey(),
+            ...get_params($request->all(), null, [
+                'beatmap_hash',
+                'ruleset_id:int',
+            ]),
         ]);
 
         if($beatmapId > 0){
@@ -55,12 +61,7 @@ class ScoreTokensController extends BaseController
         $buildId = ClientCheck::parseToken($request)['buildId'];
 
         try {
-            $scoreToken = ScoreToken::create([
-                'beatmap_id' => $beatmap->getKey(),
-                'build_id' => $buildId,
-                'ruleset_id' => $params['ruleset_id'],
-                'user_id' => $user->getKey(),
-            ]);
+            $scoreToken->saveOrExplode();
         } catch (PDOException $e) {
             // TODO: move this to be a validation inside Score model
             throw new InvariantException('failed creating score token');

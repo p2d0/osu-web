@@ -62,7 +62,7 @@ return [
 
     'beatmap_tag' => [
         'store' => [
-            'no_score' => 'Du musst einen Score auf einer Beatmap erreichen, um einen Tag hinzuzufügen.',
+            'no_score' => 'Du musst einen Score auf einer Beatmap erreichen, um ein Tag hinzuzufügen.',
         ],
     ],
 
@@ -188,6 +188,25 @@ return [
             'failed' => "Nicht abgeschlossene Scores können nicht angepinnt werden",
             'not_owner' => 'Nur der Spieler, der den Score eingereicht hat, kann ihn anpinnen.',
             'too_many' => 'Zu viele Scores angepinnt.',
+        ],
+    ],
+
+    'team' => [
+        'application' => [
+            'store' => [
+                'already_member' => "Du bist bereits Teil des Teams.",
+                'already_other_member' => "Du bist bereits Teil eines anderen Teams.",
+                'currently_applying' => 'Eine Team-Beitrittsanfrage steht noch aus.',
+                'team_closed' => 'Das Team akzeptiert derzeit keine Beitrittsanfragen.',
+                'team_full' => "Das Team ist voll und kann keine weiteren Mitglieder mehr aufnehmen.",
+            ],
+        ],
+        'part' => [
+            'is_leader' => "Der Teamleiter kann das Team nicht verlassen.",
+            'not_member' => 'Kein Mitglied des Teams.',
+        ],
+        'store' => [
+            'require_supporter_tag' => 'Um ein Team zu erstellen, wird ein osu!supporter-Tag benötigt.',
         ],
     ],
 

@@ -5,6 +5,7 @@
 
 use App\Exceptions\FastImagesizeFetchException;
 use App\Exceptions\HasExtraExceptionData;
+use App\Exceptions\InvariantException;
 use App\Http\Controllers\RankingController;
 use App\Libraries\Base64Url;
 use App\Libraries\LocaleMeta;
@@ -55,15 +56,11 @@ function atom_id(string $namespace, $id = null): string
     return 'tag:'.request()->getHttpHost().',2019:'.$namespace.($id === null ? '' : "/{$id}");
 }
 
-function background_image($url, $proxy = true)
+function background_image($url): string
 {
-    if (!present($url)) {
-        return '';
-    }
-
-    $url = $proxy ? proxy_media($url) : $url;
-
-    return sprintf(' style="background-image:url(\'%s\');" ', e($url));
+    return present($url)
+        ? sprintf(' style="background-image:url(\'%s\');" ', e($url))
+        : '';
 }
 
 function beatmap_timestamp_format($ms)
@@ -269,7 +266,7 @@ function cleanup_cookies()
     }
 
     // remove duplicates and current session domain
-    $sessionDomain = presence(ltrim($GLOBALS['cfg']['session']['domain'], '.')) ?? '';
+    $sessionDomain = presence(ltrim($GLOBALS['cfg']['session']['domain'] ?? '', '.')) ?? '';
     $domains = array_diff(array_unique($domains), [$sessionDomain]);
 
     foreach (['locale', 'osu_session', 'XSRF-TOKEN'] as $key) {
@@ -348,7 +345,7 @@ function cursor_from_params($params): ?array
     return null;
 }
 
-function datadog_increment(string $stat, array|string $tags = null, int $value = 1)
+function datadog_increment(string $stat, array|string|null $tags = null, int $value = 1)
 {
     Datadog::increment(
         stats: $GLOBALS['cfg']['datadog-helper']['prefix_web'].'.'.$stat,
@@ -357,7 +354,7 @@ function datadog_increment(string $stat, array|string $tags = null, int $value =
     );
 }
 
-function datadog_timing(callable $callable, $stat, array $tag = null)
+function datadog_timing(callable $callable, $stat, ?array $tag = null)
 {
     $startTime = microtime(true);
 
@@ -393,9 +390,9 @@ function db_unsigned_increment($column, $count)
     return DB::raw($value);
 }
 
-function default_mode()
+function default_mode(): string
 {
-    return optional(auth()->user())->playmode ?? 'osu';
+    return Auth::user()?->playmode ?? 'osu';
 }
 
 function flag_url($countryCode)
@@ -407,7 +404,7 @@ function flag_url($countryCode)
     return "/assets/images/flags/{$baseFileName}.svg";
 }
 
-function format_month_column(\DateTimeInterface $date): string
+function format_month_column(DateTimeInterface $date): string
 {
     return $date->format('ym');
 }
@@ -499,12 +496,12 @@ function truncate_inclusive(string $text, int $limit): string
     return $text;
 }
 
-function json_date(?DateTime $date): ?string
+function json_date(?DateTimeInterface $date): ?string
 {
     return $date === null ? null : $date->format('Y-m-d');
 }
 
-function json_time(?DateTime $time): ?string
+function json_time(?DateTimeInterface $time): ?string
 {
     return $time === null ? null : $time->format(DateTime::ATOM);
 }
@@ -840,7 +837,9 @@ function forum_user_link(int $id, string $username, string|null $colour, int|nul
 
 function is_api_request(): bool
 {
-    return str_starts_with(rawurldecode(Request::getPathInfo()), '/api/');
+    $url = rawurldecode(Request::getPathInfo());
+    return str_starts_with($url, '/api/')
+        || str_starts_with($url, '/_lio/');
 }
 
 function is_http(string $url): bool
@@ -852,6 +851,13 @@ function is_http(string $url): bool
 function is_json_request(): bool
 {
     return is_api_request() || Request::expectsJson();
+}
+
+function is_turbo_request(?HttpRequest $request = null): bool
+{
+    $request ??= Request::instance();
+
+    return $request->headers->get('x-turbo-request-id') !== null;
 }
 
 function is_valid_email_format(?string $email): bool
@@ -940,14 +946,14 @@ function ujs_redirect($url, $status = 200)
     $request = Request::instance();
     // This is done mainly to work around fetch ignoring/removing anchor from page redirect.
     // Reference: https://github.com/hotwired/turbo/issues/211
-    if ($request->headers->get('x-turbo-request-id') !== null) {
+    if (is_turbo_request($request)) {
         if ($status === 200 && $request->getMethod() !== 'GET') {
             // Turbo doesn't like 200 response on non-GET requests.
             // Reference: https://github.com/hotwired/turbo/issues/22
             $status = 201;
         }
 
-        return response($url, $status, ['content-type' => 'text/osu-turbo-redirect']);
+        return response($url, $status, ['x-turbo-action' => 'redirect']);
     } elseif ($request->ajax() && $request->getMethod() !== 'GET') {
         return ext_view('layout.ujs-redirect', compact('url'), 'js', $status);
     } else {
@@ -958,6 +964,21 @@ function ujs_redirect($url, $status = 200)
 
         return redirect($url, $status);
     }
+}
+
+function std_dev(array $values): array
+{
+    $size = count($values);
+    if ($size < 1) {
+        throw new InvariantException('std_dev requires sample size > 0');
+    }
+
+    $mean = array_sum($values) / $size;
+
+    return [
+        sqrt(array_sum(array_map(fn ($value) => pow($value - $mean, 2), $values)) / $size),
+        $mean,
+    ];
 }
 
 // strips combining characters after x levels deep
@@ -1019,20 +1040,25 @@ function make_blade_safe(HtmlString|string $text): HtmlString
 
 function issue_icon($issue)
 {
-    switch ($issue) {
-        case 'added':
-            return 'fas fa-cogs';
-        case 'assigned':
-            return 'fas fa-user';
-        case 'confirmed':
-            return 'fas fa-exclamation-triangle';
-        case 'resolved':
-            return 'far fa-check-circle';
-        case 'duplicate':
-            return 'fas fa-copy';
-        case 'invalid':
-            return 'far fa-times-circle';
+    $fa = match ($issue) {
+        'added' => 'fas fa-cogs',
+        'assigned' => 'fas fa-user',
+        'confirmed' => 'fas fa-exclamation-triangle',
+        'duplicate' => 'fas fa-copy',
+        'invalid' => 'far fa-times-circle',
+        'resolved' => 'far fa-check-circle',
+        default => null,
+    };
+
+    if ($fa !== null) {
+        return tag('i', ['class' => $fa]);
     }
+
+    return match ($issue) {
+        'osu!lazer' => 'lzr',
+        'osu!stable' => 'stb',
+        'osu!web' => 'web',
+    };
 }
 
 function build_url($build)
@@ -1170,7 +1196,7 @@ function nav_links()
         'page_title.main.beatmap_packs_controller._' => route('packs.index'),
     ];
     foreach (RankingController::TYPES as $rankingType) {
-        $links['rankings']["rankings.type.{$rankingType}"] = RankingController::url($rankingType, $defaultMode);
+        $links['rankings']["rankings.type.{$rankingType}"] = RankingController::url(['type' => $rankingType]);
     }
     $links['community'] = [
         'page_title.forum._' => route('forum.forums.index'),
@@ -1220,6 +1246,7 @@ function footer_legal_links(): array
     $locale = app()->getLocale();
 
     $ret = [];
+    $ret['rules'] = wiki_url('Rules');
     $ret['terms'] = route('legal', ['locale' => $locale, 'path' => 'Terms']);
     if ($locale === 'ja') {
         $ret['jp_sctl'] = route('legal', ['locale' => $locale, 'path' => 'SCTL']);
@@ -1296,6 +1323,10 @@ function i18n_date_auto(DateTimeInterface $date, string $skeleton): string
 
 function i18n_number_format($number, $style = null, $pattern = null, $precision = null, $locale = null)
 {
+    if ($number === null) {
+        return null;
+    }
+
     if ($style === null && $pattern === null && $precision === null) {
         static $formatters = [];
         $locale ??= App::getLocale();
@@ -1603,6 +1634,8 @@ function get_param_value($input, $type)
             return get_arr($input, 'get_int');
         case 'time':
             return parse_time_to_carbon($input);
+        case 'timestamp':
+            return parse_time_to_timestamp($input);
         default:
             return presence(get_string($input));
     }
@@ -1715,9 +1748,18 @@ function parse_time_to_carbon($value)
         return $value;
     }
 
-    if ($value instanceof DateTime) {
+    if ($value instanceof DateTimeInterface) {
         return Carbon\Carbon::instance($value);
     }
+
+    if ($value instanceof Carbon\CarbonImmutable) {
+        return $value->toMutable();
+    }
+}
+
+function parse_time_to_timestamp(mixed $value): ?int
+{
+    return parse_time_to_carbon($value)?->timestamp;
 }
 
 function format_duration_for_display(int $seconds)

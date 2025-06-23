@@ -80,14 +80,14 @@ return [
             'support_the_game' => 'поддержать игру',
             'testflight' => 'testflight',
         ],
+        'legacy_matches_controller' => [
+            '_' => '',
+        ],
         'legal_controller' => [
             '_' => 'информация',
         ],
         'livestreams_controller' => [
             '_' => 'прямые трансляции',
-        ],
-        'matches_controller' => [
-            '_' => 'матчи',
         ],
         'news_controller' => [
             '_' => 'новости',
@@ -108,8 +108,11 @@ return [
             '_' => 'рейтинг',
         ],
         'teams_controller' => [
-            '_' => '',
-            'show' => '',
+            '_' => 'команды',
+            'create' => 'создать команду',
+            'edit' => 'настройки команды',
+            'leaderboard' => 'командная рейтинговая таблица',
+            'show' => 'информация о команде',
         ],
         'tournaments_controller' => [
             '_' => 'турниры',
@@ -133,6 +136,11 @@ return [
     ],
     'store' => [
         '_' => 'магазин',
+    ],
+    'teams' => [
+        'members_controller' => [
+            'index' => 'участники команды',
+        ],
     ],
     'users' => [
         'modding_history_controller' => [

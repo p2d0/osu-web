@@ -5,6 +5,8 @@
 @php
     $currentUser = Auth::user();
     $currentUserUrl = route('users.show', ['user' => $currentUser->getKey()]);
+
+    $teamId = $currentUser->team?->getKey() ?? $currentUser->teamApplication?->team_id;
 @endphp
 <div
     class="simple-menu simple-menu--nav2 js-click-menu js-nav2--centered-popup"
@@ -14,7 +16,7 @@
     <a
         href="{{ $currentUserUrl  }}"
         class="simple-menu__header simple-menu__header--link js-current-user-cover"
-        {!! background_image($currentUser->cover()->url(), false) !!}
+        {!! background_image($currentUser->cover()->url()) !!}
     >
         <img class="simple-menu__header-icon" src="/images/icons/profile.svg" alt="">
         <div class="u-relative">{{ $currentUser->username }}</div>
@@ -31,8 +33,12 @@
         {{ osu_trans('layout.popup_user.links.profile') }}
     </a>
 
-    @if (($team = $currentUser->team) !== null)
-        <a class="simple-menu__item" href="{{ route('teams.show', $team) }}">
+    @if ($teamId === null)
+        <a class="simple-menu__item" href="{{ route('teams.create') }}">
+            {{ osu_trans('layout.popup_user.links.team') }}
+        </a>
+    @else
+        <a class="simple-menu__item" href="{{ route('teams.show', ['team' => $teamId]) }}">
             {{ osu_trans('layout.popup_user.links.team') }}
         </a>
     @endif

@@ -131,6 +131,20 @@ return [
         ],
     ],
 
+    'team' => [
+        'invalid_characters' => ':attribute містить недопустимі символи.',
+        'used' => ':attribute вже використовується.',
+        'word_not_allowed' => ':attribute недопустима для використання.',
+
+        'attributes' => [
+            'default_ruleset_id' => 'Режим гри',
+            'is_open' => 'Подача заявок',
+            'name' => 'Назва',
+            'short_name' => 'Коротка назва',
+            'url' => 'URL',
+        ],
+    ],
+
     'user' => [
         'contains_username' => 'Пароль не повинен містити нікнейм.',
         'email_already_used' => 'Дана адреса вже використовується.',
@@ -176,6 +190,7 @@ return [
     'user_report' => [
         'no_ranked_beatmapset' => 'Рейтингові мапи не можуть бути оскаржені',
         'not_in_channel' => 'Ви не в цьому каналі.',
+        'in_team' => 'Ви є частиною команди.',
         'reason_not_valid' => ':reason неправильна для даного типу звіту.',
         'self' => "Ви не можете поскаржитися на себе!",
     ],

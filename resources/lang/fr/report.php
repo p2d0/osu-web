@@ -34,6 +34,11 @@ return [
         'title' => 'Signaler le score de :username ?',
     ],
 
+    'team' => [
+        'button' => 'Signaler l\'équipe',
+        'title' => 'Signaler l\'équipe de :username ?',
+    ],
+
     'user' => [
         'button' => 'Signaler',
         'title' => 'Signaler :username ?',

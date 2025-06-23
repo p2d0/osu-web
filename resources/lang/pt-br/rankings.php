@@ -37,11 +37,11 @@ return [
         'charts' => 'Destaques',
         'country' => 'país',
         'daily_challenge' => 'desafio diário',
+        'global' => 'global',
         'kudosu' => 'kudosu',
         'multiplayer' => 'multijogador',
-        'performance' => 'desempenho',
-        'score' => 'pontuação',
         'seasons' => 'temporadas',
+        'team' => 'equipe',
     ],
 
     'seasons' => [
@@ -49,6 +49,9 @@ return [
         'ongoing' => 'Esta temporada ainda está em progresso (mais playlists serão adicionadas).',
         'room_count' => 'Contagem de playlists',
         'url' => 'Exibir mais informações sobre essa temporada.',
+        'validation' => [
+            'not_enough_factors' => 'não há fatores de pontuação suficientes para o cálculo adequado',
+        ],
     ],
 
     'spotlight' => [
@@ -62,6 +65,8 @@ return [
         'accuracy' => 'Precisão',
         'active_users' => 'Usuários Ativos',
         'country' => 'País',
+        'division' => 'Divisão',
+        'members' => 'Membros',
         'play_count' => 'Vezes Jogadas',
         'performance' => 'Desempenho',
         'total_score' => 'Pontuação Total',

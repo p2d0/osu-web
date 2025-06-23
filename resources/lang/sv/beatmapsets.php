@@ -17,7 +17,7 @@ return [
 
     'download' => [
         'limit_exceeded' => 'Sakta ner, spela mer.',
-        'no_mirrors' => '',
+        'no_mirrors' => 'Inga nerladdnings servrar tillgängliga.',
     ],
 
     'featured_artist_badge' => [
@@ -52,7 +52,7 @@ return [
 
         'dialog' => [
             'confirmation' => 'Är du säker på att du vill nominera denna beatmap?',
-            'different_nominator_warning' => '',
+            'different_nominator_warning' => 'Att kvalificera denna beatmap med andra nominatorer kommer att återställa dess position i kvalificeringskön.',
             'header' => 'Nominera beatmap',
             'hybrid_warning' => 'notera: du kan bara nominera en gång, så se till att du nominerar för alla spellägen som du tänker nominera för',
             'current_main_ruleset' => 'Det huvudsakliga regelsettet är för närvarande :ruleset',
@@ -140,6 +140,7 @@ return [
             'description' => 'Beskrivning',
             'genre' => 'Genre',
             'language' => 'Språk',
+            'mapper_tags' => 'Mapper-taggar',
             'no_scores' => 'Data beräknas...',
             'nominators' => 'Nominatorer',
             'nsfw' => 'Explicit innehåll',
@@ -148,7 +149,7 @@ return [
             'source' => 'Källa',
             'storyboard' => 'Denna beatmap innehåller storyboard',
             'success-rate' => 'Genomsnittig Succe',
-            'tags' => 'Taggar',
+            'user_tags' => 'Använartaggar',
             'video' => 'Denna beatmap innehåller video',
         ],
 
@@ -171,6 +172,7 @@ return [
             'global' => 'Global rankning',
             'supporter-link' => 'Klicka <a href=":link">här</a> för att se alla fina funktioner du kommer få!',
             'supporter-only' => 'Du behöver vara en supporter för att komma åt vän-, land-, och modspecifika rankningar!',
+            'team' => 'Lag Rangordning ',
             'title' => 'Poängtavla',
 
             'headers' => [
@@ -192,6 +194,7 @@ return [
                 'friend' => 'Ingen av dina vänner har satt ett poäng på denna map än!',
                 'global' => 'Inga poäng än. Du kanske ska försöka sätta några?',
                 'loading' => 'Laddar poäng...',
+                'team' => 'Ingen från ditt lag har satt ett resultat på denna karta än!',
                 'unranked' => 'Ej rankad beatmap.',
             ],
             'score' => [

@@ -20,17 +20,19 @@ return [
         'channel' => 'conversa',
         'forum_topic' => 'fórum',
         'news_post' => 'notícias',
+        'team' => 'equipa',
         'user' => 'perfil',
     ],
 
     'filters' => [
         '_' => 'todas',
-        'user' => 'perfil',
         'beatmapset' => 'beatmaps',
-        'forum_topic' => 'fórum',
-        'news_post' => 'notícias',
         'build' => 'versões',
         'channel' => 'chat',
+        'forum_topic' => 'fórum',
+        'news_post' => 'notícias',
+        'team' => 'equipa',
+        'user' => 'perfil',
     ],
 
     'item' => [
@@ -121,6 +123,16 @@ return [
                     'channel_message_group' => 'de :username',
                 ],
             ],
+
+            'channel_team' => [
+                '_' => '',
+
+                'team' => [
+                    'channel_team' => '',
+                    'channel_team_compact' => '',
+                    'channel_team_group' => '',
+                ],
+            ],
         ],
 
         'build' => [
@@ -156,6 +168,22 @@ return [
                 '_' => 'Nova resposta do fórum',
                 'forum_topic_reply' => ':username respondeu ao tópico do fórum ":title".',
                 'forum_topic_reply_compact' => ':username respondeu',
+            ],
+        ],
+
+        'team' => [
+            'team_application' => [
+                '_' => 'Pedido de adesão à equipa',
+
+                'team_application_accept' => "Agora pertences à equipa :title",
+                'team_application_accept_compact' => "Agora pertences à equipa :title",
+
+                'team_application_group' => '',
+
+                'team_application_reject' => 'O teu pedido de adesão à equipa :title foi recusado',
+                'team_application_reject_compact' => 'O teu pedido de adesão à equipa :title foi recusado',
+                'team_application_store' => '',
+                'team_application_store_compact' => '',
             ],
         ],
 
@@ -217,11 +245,13 @@ return [
 
         'channel' => [
             'announcement' => [
-                'announce' => 'Há um novo comunicado em ":name"',
+                'channel_announcement' => '',
             ],
-
             'channel' => [
-                'pm' => 'Tu recebeste uma nova mensagem de :username',
+                'channel_message' => '',
+            ],
+            'channel_team' => [
+                'channel_team' => '',
             ],
         ],
 
@@ -240,6 +270,14 @@ return [
         'forum_topic' => [
             'forum_topic_reply' => [
                 'forum_topic_reply' => 'Há novas respostas em ":title"',
+            ],
+        ],
+
+        'team' => [
+            'team_application' => [
+                'team_application_accept' => "Agora pertences à equipa :title",
+                'team_application_reject' => 'O teu pedido de adesão à equipa :title foi recusado',
+                'team_application_store' => '',
             ],
         ],
 

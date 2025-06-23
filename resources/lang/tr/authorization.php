@@ -62,7 +62,7 @@ return [
 
     'beatmap_tag' => [
         'store' => [
-            'no_score' => '',
+            'no_score' => 'Beatmape etiket eklemek için önce oynaman gerek.',
         ],
     ],
 
@@ -178,7 +178,7 @@ return [
 
     'room' => [
         'destroy' => [
-            'not_owner' => '',
+            'not_owner' => 'Sadece oda sahibi kapatabilir.',
         ],
     ],
 
@@ -188,6 +188,25 @@ return [
             'failed' => "Geçmeyen skor sabitlenemiyor.",
             'not_owner' => 'Sadece skor sahibi skoru sabitleyebilir.',
             'too_many' => 'Çok fazla skor sabitlendi.',
+        ],
+    ],
+
+    'team' => [
+        'application' => [
+            'store' => [
+                'already_member' => "Zaten takımın bir parçasısın.",
+                'already_other_member' => "Halihazırda başka bir takıma üyesin.",
+                'currently_applying' => 'Bekleyen bir takıma giriş isteğin var.',
+                'team_closed' => 'Takım şu anda girme isteklerini kabul etmiyor.',
+                'team_full' => "Takım dolu ve daha fazla üye alamaz.",
+            ],
+        ],
+        'part' => [
+            'is_leader' => "Takım lideri takımı terk edemez.",
+            'not_member' => 'Takımın üyesi değil.',
+        ],
+        'store' => [
+            'require_supporter_tag' => 'Bir takım yaratabilmek için osu!supporter etiketine sahip olman gerek.',
         ],
     ],
 

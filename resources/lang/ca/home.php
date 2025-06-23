@@ -26,11 +26,14 @@ return [
         'placeholder' => 'escriu per cercar',
         'title' => 'cerca',
 
+        'artist_track' => [
+            'more_simple' => '',
+        ],
         'beatmapset' => [
-            'login_required' => 'Inicieu sessió per cercar beatmaps',
-            'more' => ':count resultats més de cerca de beatmap',
+            'login_required' => 'Inicieu sessió per cercar mapes',
+            'more' => ':count resultats més de cerca de mapes',
             'more_simple' => 'Veure més resultats',
-            'title' => 'Beatmaps',
+            'title' => 'Mapes',
         ],
 
         'forum_post' => [
@@ -51,10 +54,16 @@ return [
 
         'mode' => [
             'all' => 'tots',
+            'artist_track' => '',
             'beatmapset' => 'beatmap',
             'forum_post' => 'fòrum',
+            'team' => '',
             'user' => 'jugador',
             'wiki_page' => 'wiki',
+        ],
+
+        'team' => [
+            'more_simple' => '',
         ],
 
         'user' => [

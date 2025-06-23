@@ -23,9 +23,12 @@ return [
         'button' => 'Hledat',
         'empty_result' => 'Nebylo nic nenalezeno!',
         'keyword_required' => 'Je vyžadováno hledané slovo',
-        'placeholder' => 'zadejte hledaný výraz',
+        'placeholder' => 'zadej hledaný výraz',
         'title' => 'hledat',
 
+        'artist_track' => [
+            'more_simple' => '',
+        ],
         'beatmapset' => [
             'login_required' => 'Pro hledání beatmap se přihlaste',
             'more' => ':count dalších výsledků vyhledávání map',
@@ -51,10 +54,16 @@ return [
 
         'mode' => [
             'all' => 'vše',
+            'artist_track' => '',
             'beatmapset' => 'beatmapa',
             'forum_post' => 'fórum',
+            'team' => '',
             'user' => 'hráč',
             'wiki_page' => 'wiki',
+        ],
+
+        'team' => [
+            'more_simple' => '',
         ],
 
         'user' => [

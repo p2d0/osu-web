@@ -5,7 +5,7 @@
 
 return [
     'empty' => [
-        '_' => '还没有玩过 osu!(lazer) 的 :type_group 游戏！',
+        '_' => '还没有玩过 osu!(lazer) 的:type_group游戏！',
         'playlists' => '歌单',
         'realtime' => '多人',
     ],
@@ -19,7 +19,7 @@ return [
 
         'errors' => [
             'duration_too_long' => '持续时间过长。',
-            'name_too_long' => '',
+            'name_too_long' => '房间名称过长。',
         ],
 
         'status' => [

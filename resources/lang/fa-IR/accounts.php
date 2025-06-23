@@ -72,7 +72,7 @@ return [
         'error' => [
             'already_linked' => 'این حساب گیت‌هاب به نمایه شخص دیگری متصل شده است.',
             'no_contribution' => 'نمی توان حساب گیت‌هابی که سابقه کمک به مخازن osu! نداشته را متصل کرد.',
-            'unverified_email' => '',
+            'unverified_email' => 'لطفا اول ایمیل گیت‌هاب خود را وریفای کنید، بعد اکانتتان را لینک کنید.',
         ],
     ],
 
@@ -88,6 +88,7 @@ return [
             'beatmap_owner_change' => 'درجه سختی میهمان',
             'beatmapset:modding' => 'مودینگ بیت مپ',
             'channel_message' => 'پیام های خصوصی چت',
+            'channel_team' => '',
             'comment_new' => 'نظرات جدید',
             'forum_topic_reply' => 'پاسخ موضوع',
             'mail' => 'ایمیل',

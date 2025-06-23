@@ -19,7 +19,7 @@ return [
         'nominate' => [
             'exhausted' => 'Olet saavuttanut päivän ehdollepanorajan, yritä uudelleen huomenna.',
             'incorrect_state' => 'Virhe toiminnon suorittamisessa, kokeile päivittää sivu.',
-            'owner' => "Omaa rytmikarttaa ei voi asettaa ehdolle.",
+            'owner' => "Omaa beatmappia ei voi asettaa ehdolle.",
             'set_metadata' => 'Sinun täytyy määrittää tyylilaji ja kieli ennen ehdolle asettamista.',
         ],
         'resolve' => [
@@ -34,13 +34,13 @@ return [
             'bot' => "Et voi äänestää botin tekemässä keskustelussa",
             'limit_exceeded' => 'Odota hetki ennen uusien äänien antamista',
             'owner' => "Omia keskusteluja ei voi äänestää.",
-            'wrong_beatmapset_state' => 'Vain vireillä olevien rytmikarttojen keskusteluja voi äänestää.',
+            'wrong_beatmapset_state' => 'Voit äänestää vain vireillä olevien beatmappien keskusteluissa.',
         ],
     ],
 
     'beatmap_discussion_post' => [
         'destroy' => [
-            'not_owner' => 'Voit poistaa vaan omia postauksiasi.',
+            'not_owner' => 'Voit poistaa ainoastaan omia viestejäsi.',
             'resolved' => 'Et voi poistaa ratkaistun keskustelun viestiä.',
             'system_generated' => 'Automaattisesti luotua viestiä ei voi poistaa.',
         ],
@@ -188,6 +188,25 @@ return [
             'failed' => "Ei läpäistyä suoritusta ei voida kiinnittää.",
             'not_owner' => 'Vain tuloksen omistaja voi kiinnittää tuloksen.',
             'too_many' => 'Kiinnitit liian monta tulosta.',
+        ],
+    ],
+
+    'team' => [
+        'application' => [
+            'store' => [
+                'already_member' => "Olet jo osa joukkuetta.",
+                'already_other_member' => "Kuulut jo toiseen joukkueseen.",
+                'currently_applying' => 'Sinulla on vierillä oleva tiimiin liittymis pyyntö.',
+                'team_closed' => 'Tiimi ei hyväksy tällä hetkellä liittymispyyntöjä.',
+                'team_full' => "Tiimi on täynnä eikä voi hyväksyä enempää jäseniä.",
+            ],
+        ],
+        'part' => [
+            'is_leader' => "Tiimin johtaja ei pysty lähtemään tiimistä.",
+            'not_member' => 'Ei ole tiimin jäsen.',
+        ],
+        'store' => [
+            'require_supporter_tag' => 'osu!supporter tagia tarvitaan tiimin luomiseen.',
         ],
     ],
 

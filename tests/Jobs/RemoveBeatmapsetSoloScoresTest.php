@@ -40,7 +40,7 @@ class RemoveBeatmapsetSoloScoresTest extends TestCase
             $scores,
         );
 
-        $job = new RemoveBeatmapsetSoloScores($beatmapset);
+        $job = new RemoveBeatmapsetSoloScores($beatmapset, true);
 
         // These scores shouldn't be deleted
         for ($i = 0; $i < 10; $i++) {
@@ -64,7 +64,7 @@ class RemoveBeatmapsetSoloScoresTest extends TestCase
                 Country::truncate();
                 Genre::truncate();
                 Language::truncate();
-                Score::select()->delete(); // TODO: revert to truncate after the table is actually renamed
+                Score::truncate();
                 User::truncate();
                 UserGroup::truncate();
                 UserGroupEvent::truncate();

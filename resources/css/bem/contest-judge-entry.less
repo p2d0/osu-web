@@ -1,12 +1,7 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the GNU Affero General Public License v3.0.
 // See the LICENCE file in the repository root for full licence text.
 
-@margin: 10px;
-
 .contest-judge-entry {
-  margin-bottom: 20px;
-  max-width: 500px;
-
   &__button {
     display: flex;
     justify-content: flex-end;
@@ -17,18 +12,13 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    max-width: 500px;
   }
 
   &__category {
     display: flex;
     flex-direction: column;
     gap: 10px;
-  }
-
-  &__description-icon {
-    display: flex;
-    align-items: center;
-    font-size: @font-size--small-2;
   }
 
   &__label {
@@ -76,7 +66,7 @@
   }
 
   &__title {
-    margin-bottom: @margin;
+    margin-bottom: 10px;
     font-size: @font-size--large;
     font-weight: bold;
     color: hsl(var(--hsl-l1));

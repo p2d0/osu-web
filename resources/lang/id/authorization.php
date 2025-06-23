@@ -13,12 +13,12 @@ return [
 
     'beatmap_discussion' => [
         'destroy' => [
-            'is_hype' => 'Tidak dapat membatalkan pemberian hype.',
-            'has_reply' => 'Tidak dapat menghapus topik diskusi yang mempunyai balasan',
+            'is_hype' => 'Pemberian hype tidak dapat diurungkan.',
+            'has_reply' => 'Topik diskusi yang memiliki balasan tidak dapat dihapus',
         ],
         'nominate' => [
-            'exhausted' => 'Anda telah mencapai batas nominasi Anda untuk hari ini, silakan coba lagi besok.',
-            'incorrect_state' => 'Terjadi kesalahan pada saat melangsungkan tindakan. Silakan muat ulang laman.',
+            'exhausted' => 'Kamu telah mencapai batas nominasi kamu untuk hari ini. Silakan coba lagi besok.',
+            'incorrect_state' => 'Terdapat kesalahan pada saat melangsungkan tindakan ini. Cobalah untuk memuat ulang halaman.',
             'owner' => "Tidak dapat menominasikan beatmap buatan sendiri.",
             'set_metadata' => 'Kamu harus terlebih dahulu menentukan aliran dan bahasa sebelum memberikan nominasi.',
         ],
@@ -46,7 +46,7 @@ return [
         ],
 
         'edit' => [
-            'not_owner' => 'Postingan ini hanya dapat disunting oleh pengirimnya.',
+            'not_owner' => 'Postingan hanya dapat disunting oleh pengirim.',
             'resolved' => 'Kamu tidak dapat menyunting postingan pada topik diskusi yang telah terjawab.',
             'system_generated' => 'Postingan yang dihasilkan secara otomatis tidak dapat disunting.',
         ],
@@ -145,7 +145,7 @@ return [
 
             'vote' => [
                 'no_forum_access' => 'Kamu tidak memiliki akses ke forum yang dituju.',
-                'over' => 'Polling selesai dan tidak dapat dipilih lagi.',
+                'over' => 'Jajak pendapat ini telah berakhir dan tidak lagi dapat dipilih.',
                 'play_more' => 'Kamu harus lebih banyak bermain sebelum kamu dapat memberikan suara pada forum.',
                 'voted' => 'Pengubahan suara tidak diizinkan.',
 
@@ -191,10 +191,29 @@ return [
         ],
     ],
 
+    'team' => [
+        'application' => [
+            'store' => [
+                'already_member' => "Kamu sudah menjadi bagian dari tim ini.",
+                'already_other_member' => "Kamu sudah menjadi bagian dari tim yang berbeda.",
+                'currently_applying' => 'Kamu memiliki permintaan untuk bergabung ke tim yang belum dijawab.',
+                'team_closed' => 'Tim ini saat ini tidak menerima permintaan untuk bergabung.',
+                'team_full' => "Tim ini sudah penuh dan tidak lagi dapat menerima anggota baru.",
+            ],
+        ],
+        'part' => [
+            'is_leader' => "Ketua tim tidak dapat meninggalkan tim.",
+            'not_member' => 'Kamu bukan merupakan anggota dari tim ini.',
+        ],
+        'store' => [
+            'require_supporter_tag' => 'Tag osu!supporter diperlukan untuk membuat tim.',
+        ],
+    ],
+
     'user' => [
         'page' => [
             'edit' => [
-                'locked' => 'Laman pengguna terkunci.',
+                'locked' => 'Halaman pengguna terkunci.',
                 'not_owner' => 'Hanya dapat menyunting laman pengguna sendiri.',
                 'require_supporter_tag' => 'tag osu!supporter dibutuhkan.',
             ],

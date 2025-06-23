@@ -37,11 +37,11 @@ return [
         'charts' => '',
         'country' => 'ел',
         'daily_challenge' => '',
+        'global' => '',
         'kudosu' => 'kudosu',
         'multiplayer' => '',
-        'performance' => 'өнімділік',
-        'score' => '',
         'seasons' => '',
+        'team' => '',
     ],
 
     'seasons' => [
@@ -49,6 +49,9 @@ return [
         'ongoing' => '',
         'room_count' => '',
         'url' => '',
+        'validation' => [
+            'not_enough_factors' => '',
+        ],
     ],
 
     'spotlight' => [
@@ -62,6 +65,8 @@ return [
         'accuracy' => '',
         'active_users' => '',
         'country' => 'Ел',
+        'division' => '',
+        'members' => '',
         'play_count' => 'Ойын саны',
         'performance' => 'Өнімділік',
         'total_score' => '',

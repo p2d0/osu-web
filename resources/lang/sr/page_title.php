@@ -80,14 +80,14 @@ return [
             'support_the_game' => 'подржите игру',
             'testflight' => 'testflight',
         ],
+        'legacy_matches_controller' => [
+            '_' => '',
+        ],
         'legal_controller' => [
             '_' => 'информације',
         ],
         'livestreams_controller' => [
             '_' => 'стримови уживо',
-        ],
-        'matches_controller' => [
-            '_' => 'мечеви',
         ],
         'news_controller' => [
             '_' => 'новости',
@@ -108,8 +108,11 @@ return [
             '_' => 'рангови',
         ],
         'teams_controller' => [
-            '_' => '',
-            'show' => '',
+            '_' => 'тимови',
+            'create' => 'направите тим',
+            'edit' => 'подешавање тима',
+            'leaderboard' => 'тимска ранг листа',
+            'show' => 'информације тима',
         ],
         'tournaments_controller' => [
             '_' => 'турнири',
@@ -133,6 +136,11 @@ return [
     ],
     'store' => [
         '_' => 'продавница',
+    ],
+    'teams' => [
+        'members_controller' => [
+            'index' => 'чланови тима',
+        ],
     ],
     'users' => [
         'modding_history_controller' => [

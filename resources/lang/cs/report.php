@@ -34,6 +34,11 @@ return [
         'title' => 'Nahlásit skóre uživatele :username?',
     ],
 
+    'team' => [
+        'button' => 'Nahlásit tým',
+        'title' => 'Nahlásit tým uživatele :username?',
+    ],
+
     'user' => [
         'button' => 'Nahlásit',
         'title' => 'Nahlásit :username?',

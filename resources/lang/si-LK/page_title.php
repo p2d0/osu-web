@@ -80,13 +80,13 @@ return [
             'support_the_game' => '',
             'testflight' => '',
         ],
+        'legacy_matches_controller' => [
+            '_' => '',
+        ],
         'legal_controller' => [
             '_' => '',
         ],
         'livestreams_controller' => [
-            '_' => '',
-        ],
-        'matches_controller' => [
             '_' => '',
         ],
         'news_controller' => [
@@ -109,6 +109,9 @@ return [
         ],
         'teams_controller' => [
             '_' => '',
+            'create' => '',
+            'edit' => '',
+            'leaderboard' => '',
             'show' => '',
         ],
         'tournaments_controller' => [
@@ -133,6 +136,11 @@ return [
     ],
     'store' => [
         '_' => '',
+    ],
+    'teams' => [
+        'members_controller' => [
+            'index' => '',
+        ],
     ],
     'users' => [
         'modding_history_controller' => [

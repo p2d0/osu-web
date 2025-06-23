@@ -27,6 +27,7 @@ interface BeatmapsetExtendedJsonAdditionalAttributes {
   nominations_summary: NominationsSummary;
   ranked: number;
   ranked_date: string | null;
+  rating: number;
   storyboard: boolean;
   submitted_date: string | null;
   tags: string;
@@ -55,6 +56,7 @@ type BeatmapsetJsonForShowIncludes = Required<Pick<BeatmapsetExtendedJson,
 | 'language'
 | 'ratings'
 | 'recent_favourites'
+| 'related_tags'
 | 'related_users'
 | 'user'
 >>;

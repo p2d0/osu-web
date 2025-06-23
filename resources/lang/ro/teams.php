@@ -4,79 +4,165 @@
 // See the LICENCE file in the repository root for full licence text.
 
 return [
+    'applications' => [
+        'accept' => [
+            'ok' => 'Utilizator adăugat în echipă.',
+        ],
+        'destroy' => [
+            'ok' => 'Cerere de înscriere anulată.',
+        ],
+        'reject' => [
+            'ok' => 'Cerere de înscriere respinsă.',
+        ],
+        'store' => [
+            'ok' => 'Alăturarea în echipa a fost solicitată.',
+        ],
+    ],
+
+    'card' => [
+        'members' => '',
+    ],
+
+    'create' => [
+        'submit' => 'Creează Echipă',
+
+        'form' => [
+            'name_help' => 'Numele echipei. Acest nume este permanent pe moment.',
+            'short_name_help' => 'Maxim 4 caractere.',
+            'title' => "Hai să configurăm o nouă echipă",
+        ],
+
+        'intro' => [
+            'description' => "Jucați împreună cu prieteni, existenți sau noi. Nu sunteți într-o echipă momentan. Alătură-te unei echipe existente vizitând pagina echipei sau creează-ți propria echipă de pe această pagină.",
+            'title' => 'Echipă!',
+        ],
+    ],
+
+    'destroy' => [
+        'ok' => 'Echipă ștearsă',
+    ],
+
     'edit' => [
-        'saved' => '',
-        'title' => '',
+        'ok' => 'Setările au fost salvate cu succes.',
+        'title' => 'Setări Echipă',
 
         'description' => [
-            'label' => '',
-            'title' => '',
+            'label' => 'Descriere',
+            'title' => 'Descrierea Echipei',
+        ],
+
+        'flag' => [
+            'label' => 'Steagul Echipei',
+            'title' => 'Setează Steagul Echipei',
         ],
 
         'header' => [
-            'label' => '',
-            'title' => '',
-        ],
-
-        'logo' => [
-            'label' => '',
-            'title' => '',
+            'label' => 'Imagine Antet',
+            'title' => 'Setează Imagine Antet',
         ],
 
         'settings' => [
-            'application' => '',
-            'application_help' => '',
-            'default_ruleset' => '',
-            'default_ruleset_help' => '',
-            'title' => '',
-            'url' => '',
+            'application_help' => 'Dacă este permis altora să trimită cereri de înscriere în echipă',
+            'default_ruleset_help' => 'Ruleset-ul care va fi selectat implicit la vizitarea paginii echipei',
+            'flag_help' => 'Dimensiunea maximă de :width×:height',
+            'header_help' => 'Dimensiunea maximă de :width×:height',
+            'title' => 'Setări Echipă',
 
             'application_state' => [
-                'state_0' => '',
-                'state_1' => '',
+                'state_0' => 'Închise',
+                'state_1' => 'Deschise',
             ],
         ],
+    ],
+
+    'header_links' => [
+        'edit' => 'setări',
+        'leaderboard' => 'clasament',
+        'show' => 'info',
+
+        'members' => [
+            'index' => 'gestionează membrii',
+        ],
+    ],
+
+    'leaderboard' => [
+        'global_rank' => 'Clasament Global',
     ],
 
     'members' => [
         'destroy' => [
-            'success' => '',
+            'success' => 'Membru al echipei eliminat',
         ],
 
         'index' => [
-            'title' => '',
+            'title' => 'Gestionare Membri',
+
+            'applications' => [
+                'accept_confirm' => 'Adăugați utilizatorul :user la echipă?',
+                'created_at' => 'Solicitat La',
+                'empty' => 'Nici o cerere de înscriere în acest moment.',
+                'empty_slots' => 'Locuri disponibile',
+                'empty_slots_overflow' => 'un utilizator în plus|:count_delimited utilizatori în plus|:count_delimited de utilizatori în plus',
+                'reject_confirm' => 'Refuzați cererea de înscriere de la utilizatorul :user?',
+                'title' => 'Cereri de Înscriere',
+            ],
 
             'table' => [
-                'status' => '',
-                'joined_at' => '',
-                'remove' => '',
-                'title' => '',
+                'joined_at' => 'Data Înscrierii',
+                'remove' => 'Elimină',
+                'remove_confirm' => 'Eliminați utilizatorul :user din echipă?',
+                'set_leader' => 'Transferați conducerea echipei',
+                'set_leader_confirm' => 'Transferați conducerea echipei către utilizatorul :user?',
+                'status' => 'Status',
+                'title' => 'Membrii Actuali',
             ],
 
             'status' => [
-                'status_0' => '',
-                'status_1' => '',
+                'status_0' => 'Inactiv',
+                'status_1' => 'Activ',
             ],
         ],
+
+        'set_leader' => [
+            'success' => 'Utilizatorul :user este acum liderul echipei.',
+        ],
     ],
+
+    'part' => [
+        'ok' => 'Ai părăsit echipa ;_;',
+    ],
+
     'show' => [
         'bar' => [
-            'settings' => '',
+            'chat' => 'Chat Echipă',
+            'destroy' => 'Dizolvă Echipa',
+            'join' => 'Cere Înscrierea',
+            'join_cancel' => 'Anulează Cererea',
+            'part' => 'Părăsește Echipa',
         ],
 
         'info' => [
-            'created' => '',
-            'website' => '',
+            'created' => 'Formată',
         ],
 
         'members' => [
-            'members' => '',
-            'owner' => '',
+            'members' => 'Membrii Echipei',
+            'owner' => 'Liderul Echipei',
         ],
 
         'sections' => [
-            'members' => '',
-            'info' => '',
+            'about' => 'Despre Noi!',
+            'info' => 'Info',
+            'members' => 'Membri',
         ],
+
+        'statistics' => [
+            'rank' => 'Rang',
+            'leader' => 'Liderul Echipei',
+        ],
+    ],
+
+    'store' => [
+        'ok' => 'Echipă creată.',
     ],
 ];

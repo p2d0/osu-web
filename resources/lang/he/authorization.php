@@ -191,6 +191,25 @@ return [
         ],
     ],
 
+    'team' => [
+        'application' => [
+            'store' => [
+                'already_member' => "",
+                'already_other_member' => "",
+                'currently_applying' => '',
+                'team_closed' => '',
+                'team_full' => "",
+            ],
+        ],
+        'part' => [
+            'is_leader' => "ראש הקבוצה אינו יכול לעזוב את הקבוצה",
+            'not_member' => '',
+        ],
+        'store' => [
+            'require_supporter_tag' => '',
+        ],
+    ],
+
     'user' => [
         'page' => [
             'edit' => [
@@ -200,7 +219,7 @@ return [
             ],
         ],
         'update_email' => [
-            'locked' => '',
+            'locked' => 'כתבות האימייל נעולה',
         ],
     ],
 ];

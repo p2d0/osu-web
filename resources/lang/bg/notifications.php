@@ -20,17 +20,19 @@ return [
         'channel' => 'чат',
         'forum_topic' => 'форум',
         'news_post' => 'новини',
+        'team' => 'отбор',
         'user' => 'профил',
     ],
 
     'filters' => [
         '_' => 'всички',
-        'user' => 'профил',
         'beatmapset' => 'бийтмапове',
-        'forum_topic' => 'форум',
-        'news_post' => 'новини',
         'build' => 'промени',
         'channel' => 'чат',
+        'forum_topic' => 'форум',
+        'news_post' => 'новини',
+        'team' => 'отбор',
+        'user' => 'профил',
     ],
 
     'item' => [
@@ -121,6 +123,16 @@ return [
                     'channel_message_group' => 'от :username',
                 ],
             ],
+
+            'channel_team' => [
+                '_' => '',
+
+                'team' => [
+                    'channel_team' => '',
+                    'channel_team_compact' => '',
+                    'channel_team_group' => '',
+                ],
+            ],
         ],
 
         'build' => [
@@ -156,6 +168,22 @@ return [
                 '_' => 'Отговор във форум',
                 'forum_topic_reply' => ':username отговори в ":title"',
                 'forum_topic_reply_compact' => ':username отговори',
+            ],
+        ],
+
+        'team' => [
+            'team_application' => [
+                '_' => '',
+
+                'team_application_accept' => "",
+                'team_application_accept_compact' => "",
+
+                'team_application_group' => '',
+
+                'team_application_reject' => '',
+                'team_application_reject_compact' => '',
+                'team_application_store' => '',
+                'team_application_store_compact' => '',
             ],
         ],
 
@@ -217,11 +245,13 @@ return [
 
         'channel' => [
             'announcement' => [
-                'announce' => 'Има ново съобщение в ":name"',
+                'channel_announcement' => '',
             ],
-
             'channel' => [
-                'pm' => 'Получи ново съобщение от :username',
+                'channel_message' => '',
+            ],
+            'channel_team' => [
+                'channel_team' => '',
             ],
         ],
 
@@ -240,6 +270,14 @@ return [
         'forum_topic' => [
             'forum_topic_reply' => [
                 'forum_topic_reply' => 'Има нов отговор в ":title"',
+            ],
+        ],
+
+        'team' => [
+            'team_application' => [
+                'team_application_accept' => "",
+                'team_application_reject' => '',
+                'team_application_store' => '',
             ],
         ],
 

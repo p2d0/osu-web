@@ -8,8 +8,7 @@ import CurrentUserJson from 'interfaces/current-user-json';
 import EventJson from 'interfaces/event-json';
 import KudosuHistoryJson from 'interfaces/kudosu-history-json';
 import Ruleset from 'interfaces/ruleset';
-import { ScoreCurrentUserPinJson } from 'interfaces/score-json';
-import SoloScoreJson, { isSoloScoreJsonForUser, SoloScoreJsonForUser } from 'interfaces/solo-score-json';
+import ScoreJson, { isScoreJsonForUser, ScoreJsonForUser } from 'interfaces/score-json';
 import UserCoverJson from 'interfaces/user-cover-json';
 import UserCoverPresetJson from 'interfaces/user-cover-preset-json';
 import { ProfileExtraPage, profileExtraPages } from 'interfaces/user-extended-json';
@@ -24,7 +23,7 @@ import { jsonClone } from 'utils/json';
 import { hideLoadingOverlay, showLoadingOverlay } from 'utils/loading-overlay';
 import { getInt } from 'utils/math';
 import { apiShowMore } from 'utils/offset-paginator';
-import { switchNever } from 'utils/switch-never';
+import { SwitchError } from 'utils/switch-never';
 import getPage, { PageSectionJson, PageSectionWithoutCountJson } from './extra-page';
 import { ProfilePageSection, ProfilePageUserJson } from './extra-page-props';
 
@@ -43,17 +42,18 @@ const sectionToUrlType = {
 } as const;
 
 // #region lazy loaded extra pages
-const beatmapsetsExtraPageKeys = ['favourite', 'graveyard', 'guest', 'loved', 'nominated', 'pending', 'ranked'] as const;
-type BeatmapsetsJson = Record<typeof beatmapsetsExtraPageKeys[number], PageSectionJson<BeatmapsetExtendedJson>>;
+type BeatmapsetsExtraPageKeys = 'favourite' | 'graveyard' | 'guest' | 'loved' | 'nominated' | 'pending' | 'ranked';
+type BeatmapsetsJson = Record<BeatmapsetsExtraPageKeys, PageSectionJson<BeatmapsetExtendedJson>>;
 
 interface HistoricalJson {
   beatmap_playcounts: PageSectionJson<BeatmapPlaycountJson>;
   monthly_playcounts: UserMonthlyPlaycountJson[];
-  recent: PageSectionJson<SoloScoreJsonForUser>;
+  recent: PageSectionJson<ScoreJsonForUser>;
   replays_watched_counts: UserReplaysWatchedCountJson[];
 }
-const topScoresKeys = ['best', 'firsts', 'pinned'] as const;
-type TopScoresJson = Record<typeof topScoresKeys[number], PageSectionJson<SoloScoreJsonForUser>>;
+
+type TopScoresKeys = 'best' | 'firsts' | 'pinned';
+type TopScoresJson = Record<TopScoresKeys, PageSectionJson<ScoreJsonForUser>>;
 // #endregion
 
 export function validPage(page: unknown) {
@@ -81,13 +81,6 @@ interface LazyPages {
 }
 
 export type Page = ProfileExtraPage | 'main';
-
-type ScorePinReorderParamsBase = Pick<ScoreCurrentUserPinJson, 'score_id'>;
-
-interface ScorePinReorderParams extends ScorePinReorderParamsBase {
-  order1?: ScorePinReorderParamsBase;
-  order3?: ScorePinReorderParamsBase;
-}
 
 interface State {
   currentPage: Page;
@@ -195,21 +188,17 @@ export default class Controller {
     items.splice(newIndex, 0, target);
     this.saveState();
 
-    const params: ScorePinReorderParams = target.current_user_attributes.pin;
-    const adjacentParams = adjacentScore.current_user_attributes.pin;
-    if (currentIndex > newIndex) {
+    const params = currentIndex > newIndex
       // target will be above existing item at index
-      params.order3 = adjacentParams;
-    } else {
+      ? { before_score_id: adjacentScore.id }
       // target will be below existing item at index
-      params.order1 = adjacentParams;
-    }
+      : { after_score_id: adjacentScore.id };
 
     showLoadingOverlay();
-    $.ajax(route('score-pins.reorder'), {
+    $.ajax(route('score-pins.reorder', { score: target.id }), {
       data: params,
       dataType: 'json',
-      method: 'PUT',
+      method: 'POST',
     }).fail(action((xhr: JQuery.jqXHR, status: string) => {
       error(xhr, status);
       if (this.state.lazy.top_ranks != null) {
@@ -398,8 +387,7 @@ export default class Controller {
       }
 
       default:
-        switchNever(section);
-        throw new Error('trying to show more unexpected section');
+        throw new SwitchError(section);
     }
 
     this.xhr[section]?.done(this.saveState);
@@ -453,10 +441,10 @@ export default class Controller {
   }
 
   @action
-  private readonly onScorePinUpdate = (event: unknown, isPinned: boolean, score: SoloScoreJson) => {
+  private readonly onScorePinUpdate = (event: unknown, isPinned: boolean, score: ScoreJson) => {
     if (this.state.lazy.top_ranks == null) return;
     // make sure the typing is correct
-    if (!isSoloScoreJsonForUser(score)) {
+    if (!isScoreJsonForUser(score)) {
       return;
     }
 

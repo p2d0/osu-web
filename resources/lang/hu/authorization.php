@@ -191,6 +191,25 @@ return [
         ],
     ],
 
+    'team' => [
+        'application' => [
+            'store' => [
+                'already_member' => "Már a csapat tagja vagy.",
+                'already_other_member' => "Már egy másik csapat tagja vagy.",
+                'currently_applying' => '',
+                'team_closed' => 'A csapat jelenleg nem fogad új jelentkezőket.',
+                'team_full' => "A csapat tele van és nem fogad új jelentkezőket.",
+            ],
+        ],
+        'part' => [
+            'is_leader' => "A csapatvezető nem léphet ki a csapatból.",
+            'not_member' => '',
+        ],
+        'store' => [
+            'require_supporter_tag' => '',
+        ],
+    ],
+
     'user' => [
         'page' => [
             'edit' => [

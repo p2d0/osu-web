@@ -49,7 +49,7 @@ return [
     ],
 
     'card' => [
-        'gift_supporter' => 'Regala osu!supporter',
+        'gift_supporter' => 'Regala il tag supporter',
         'loading' => 'Caricamento...',
         'send_message' => 'Invia messaggio',
     ],
@@ -161,12 +161,13 @@ return [
 
         'options' => [
             'cheating' => 'Gioco scorretto / Cheating',
-            'multiple_accounts' => 'Uso di account multipli',
+            'inappropriate_chat' => 'Comportamento inappropriato in chat',
             'insults' => 'Insulti a me / altri',
-            'spam' => 'Spamming',
-            'unwanted_content' => 'Condivisione di contenuti inappropriati',
+            'multiple_accounts' => 'Uso di account multipli',
             'nonsense' => 'Senza senso',
             'other' => 'Altro (scrivi sotto)',
+            'spam' => 'Spamming',
+            'unwanted_content' => 'Contenuto inappropriato',
         ],
     ],
     'restricted_banner' => [
@@ -217,7 +218,7 @@ return [
             'cover' => [
                 'button' => 'Cambia copertina del profilo',
                 'defaults_info' => 'Più opzioni per la copertina saranno disponibili in futuro',
-                'holdover_remove_confirm' => "",
+                'holdover_remove_confirm' => "La copertina precedentemente selezionata non è più disponibile. Non puoi riselezionarla dopo essere passato a una copertina diversa. Procedere?",
                 'title' => 'Immagine di copertina',
 
                 'upload' => [
@@ -225,7 +226,7 @@ return [
                     'button' => 'Carica immagine',
                     'dropzone' => 'Trascina qui per caricarla',
                     'dropzone_info' => 'Puoi anche trascinare qui l\'immagine per caricarla',
-                    'size_info' => 'L\'immagine di copertina dovrebbe essere 2400x640',
+                    'size_info' => 'L\'immagine di copertina dovrebbe essere 2000x500',
                     'too_large' => 'Il file caricato è troppo grande.',
                     'unsupported_format' => 'Formato non supportato.',
 
@@ -392,7 +393,7 @@ return [
                 'download_replay' => 'Scarica Replay',
                 'not_ranked' => 'Solo le beatmap classificate conferiscono pp',
                 'pp_weight' => 'valutata :percentage',
-                'view_details' => 'Visualizza Dettagli',
+                'view_details' => 'Visualizza dettagli',
                 'title' => 'Rank',
 
                 'best' => [
@@ -478,6 +479,10 @@ return [
             'global' => 'Posto globale per :mode',
             'global_simple' => 'Classifica Globale',
             'highest' => 'Posizione più alta: :rank il :date',
+        ],
+        'season_stats' => [
+            'division_top_percentage' => 'Top :value',
+            'total_score' => 'Punteggio totale',
         ],
         'stats' => [
             'hit_accuracy' => 'Precisione dei Colpi',

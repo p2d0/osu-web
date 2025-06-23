@@ -31,7 +31,7 @@ return [
             'username' => 'Käyttäjänimi',
 
             'beatmapset_status' => [
-                '_' => 'Rytmikartan tila',
+                '_' => 'Beatmapin tila',
                 'all' => 'Kaikki',
                 'disqualified' => 'Hylätty',
                 'never_qualified' => 'Ei koskaan kelpuutettu',
@@ -67,10 +67,10 @@ return [
     ],
 
     'refresh' => [
-        'checking' => '',
-        'has_updates' => '',
-        'no_updates' => '',
-        'updating' => '',
+        'checking' => 'Tarkistetaan päivityksiä...',
+        'has_updates' => 'Keskustelussa on päivityksiä, klikkaa päivittääksesi.',
+        'no_updates' => 'Ei päivityksiä.',
+        'updating' => 'Päivitetään...',
     ],
 
     'reply' => [

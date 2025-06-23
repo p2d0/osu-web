@@ -20,17 +20,19 @@ return [
         'channel' => 'chat',
         'forum_topic' => 'forum',
         'news_post' => 'notizie',
+        'team' => 'squadra',
         'user' => 'profilo',
     ],
 
     'filters' => [
         '_' => 'tutto',
-        'user' => 'profilo',
         'beatmapset' => 'beatmap',
-        'forum_topic' => 'forum',
-        'news_post' => 'notizie',
         'build' => 'versioni',
         'channel' => 'chat',
+        'forum_topic' => 'forum',
+        'news_post' => 'notizie',
+        'team' => 'squadra',
+        'user' => 'profilo',
     ],
 
     'item' => [
@@ -121,6 +123,16 @@ return [
                     'channel_message_group' => 'da :username',
                 ],
             ],
+
+            'channel_team' => [
+                '_' => '',
+
+                'team' => [
+                    'channel_team' => '',
+                    'channel_team_compact' => '',
+                    'channel_team_group' => '',
+                ],
+            ],
         ],
 
         'build' => [
@@ -156,6 +168,22 @@ return [
                 '_' => 'Nuova risposta sul forum',
                 'forum_topic_reply' => ':username ha risposto a ":title"',
                 'forum_topic_reply_compact' => ':username ha risposto',
+            ],
+        ],
+
+        'team' => [
+            'team_application' => [
+                '_' => 'Richiesta di partecipazione squadra',
+
+                'team_application_accept' => "Sei diventato un membro della squadra :title",
+                'team_application_accept_compact' => "Sei diventato un membro della squadra :title",
+
+                'team_application_group' => '',
+
+                'team_application_reject' => 'La tua richiesta di unirsi alla squadra :title è stata rifiutata',
+                'team_application_reject_compact' => 'La tua richiesta di unirsi alla squadra :title è stata rifiutata',
+                'team_application_store' => '',
+                'team_application_store_compact' => '',
             ],
         ],
 
@@ -205,7 +233,7 @@ return [
                 'beatmapset_love' => '":title" è stata promossa tra le amate',
                 'beatmapset_nominate' => '":title" è stata nominata',
                 'beatmapset_qualify' => '":title" ha ottenuto abbastanza nomine ed è entrata nella coda di ranking',
-                'beatmapset_rank' => '":title" è stata rankata',
+                'beatmapset_rank' => '":title" è stata classificata',
                 'beatmapset_remove_from_loved' => '":title" è stata rimossa dalle amate',
                 'beatmapset_reset_nominations' => 'La nomina di ":title" è stata resettata',
             ],
@@ -217,11 +245,13 @@ return [
 
         'channel' => [
             'announcement' => [
-                'announce' => 'C\'è un nuovo annuncio in ":name"',
+                'channel_announcement' => '',
             ],
-
             'channel' => [
-                'pm' => 'Hai ricevuto un nuovo messaggio da :username',
+                'channel_message' => '',
+            ],
+            'channel_team' => [
+                'channel_team' => '',
             ],
         ],
 
@@ -240,6 +270,14 @@ return [
         'forum_topic' => [
             'forum_topic_reply' => [
                 'forum_topic_reply' => 'Ci sono nuove risposte in ":title"',
+            ],
+        ],
+
+        'team' => [
+            'team_application' => [
+                'team_application_accept' => "Sei diventato un membro della squadra :title",
+                'team_application_reject' => 'La tua richiesta di unirsi alla squadra :title è stata rifiutata',
+                'team_application_store' => '',
             ],
         ],
 

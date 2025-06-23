@@ -10,6 +10,7 @@ use App\Libraries\Elasticsearch\Indexing;
 use App\Models\ArtistTrack;
 use App\Models\Beatmapset;
 use App\Models\Forum\Post;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Console\Command;
 
@@ -19,6 +20,7 @@ class EsIndexDocuments extends Command
         'artist_tracks' => [ArtistTrack::class],
         'beatmapsets' => [Beatmapset::class],
         'posts' => [Post::class],
+        'teams' => [Team::class],
         'users' => [User::class],
     ];
 
@@ -104,20 +106,21 @@ class EsIndexDocuments extends Command
 
         foreach ($types as $type) {
             $bar = $this->output->createProgressBar();
+            $bar->setFormat(' %current% [%bar%] %message%');
 
             $this->info("{$pretext} {$type} into {$indexName}");
 
+            $progressCallback = function ($progress, $message) use ($bar) {
+                $bar->setMessage($message);
+                $bar->setProgress($progress);
+            };
             if (!$this->inplace && $type === $first) {
                 // create new index if the first type for this index, otherwise
                 // index in place.
-                $type::esIndexIntoNew(Es::CHUNK_SIZE, $indexName, function ($progress) use ($bar) {
-                    $bar->setProgress($progress);
-                });
+                $type::esIndexIntoNew(Es::CHUNK_SIZE, $indexName, $progressCallback);
             } else {
                 $options = ['index' => $indexName];
-                $type::esReindexAll(Es::CHUNK_SIZE, 0, $options, function ($progress) use ($bar) {
-                    $bar->setProgress($progress);
-                });
+                $type::esReindexAll(Es::CHUNK_SIZE, 0, $options, $progressCallback);
             }
 
             $bar->finish();

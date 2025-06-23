@@ -178,16 +178,35 @@ return [
 
     'room' => [
         'destroy' => [
-            'not_owner' => '',
+            'not_owner' => 'Kun ejeren at rummet kan lukke det.',
         ],
     ],
 
     'score' => [
         'pin' => [
-            'disabled_type' => "",
-            'failed' => "",
+            'disabled_type' => "Kan ikke fastlåse denne type scoring",
+            'failed' => "Kan ikke fastlåse ikke-bestående score.",
             'not_owner' => 'Kun score ejer kan pin score.',
             'too_many' => 'Fastgjort for mange score.',
+        ],
+    ],
+
+    'team' => [
+        'application' => [
+            'store' => [
+                'already_member' => "Du er allerede en del a holdet.",
+                'already_other_member' => "Du er allerede en del af et andet hold.",
+                'currently_applying' => '',
+                'team_closed' => '',
+                'team_full' => "",
+            ],
+        ],
+        'part' => [
+            'is_leader' => "",
+            'not_member' => '',
+        ],
+        'store' => [
+            'require_supporter_tag' => '',
         ],
     ],
 

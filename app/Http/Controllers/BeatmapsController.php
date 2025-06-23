@@ -25,7 +25,7 @@ use Carbon\Carbon;
  */
 class BeatmapsController extends Controller
 {
-    const DEFAULT_API_INCLUDES = ['beatmapset.ratings', 'failtimes', 'max_combo'];
+    const DEFAULT_API_INCLUDES = ['beatmapset.ratings', 'current_user_playcount', 'failtimes', 'max_combo', 'owners'];
     const DEFAULT_SCORE_INCLUDES = ['user', 'user.country', 'user.cover', 'user.team'];
 
     public function __construct()
@@ -38,7 +38,7 @@ class BeatmapsController extends Controller
     private static function assertSupporterOnlyOptions(?User $currentUser, string $type, array $mods): void
     {
         $isSupporter = $currentUser !== null && $currentUser->isSupporter();
-        if ($type !== 'global' && !$isSupporter) {
+        if (in_array($type, ScoreSearchParams::SUPPORTER_TYPES, true) && !$isSupporter) {
             throw new InvariantException(osu_trans('errors.supporter_only'));
         }
         if (!empty($mods) && !is_api_request() && !$isSupporter) {
@@ -46,7 +46,8 @@ class BeatmapsController extends Controller
         }
     }
 
-    private static function beatmapScores(string $id, ?string $scoreTransformerType, ?bool $isLegacy): array
+    // TODO: move this to scores() and remove soloScores(). Probably sometime after October 2025.
+    private static function beatmapScores(string $id, ?bool $legacyFormat, ?bool $isLegacy): array
     {
         $params = get_params(request()->all(), null, [
             'limit:int',
@@ -170,9 +171,10 @@ class BeatmapsController extends Controller
         ]);
         $scores = $esFetch->all()->loadMissing(['beatmap', 'user.country', 'user.team', 'processHistory']);
         $userScore = $esFetch->userBest();
-        $scoreTransformer = new ScoreTransformer($scoreTransformerType);
+        $scoreTransformer = new ScoreTransformer($legacyFormat);
 
         $results = [
+            'score_count' => UserRank::getCount($esFetch->baseParams),
             'scores' => json_collection(
                 $scores,
                 $scoreTransformer,
@@ -288,7 +290,7 @@ class BeatmapsController extends Controller
      *
      * Field    | Type                                  | Description
      * -------- | ------------------------------------- | -----------
-     * beatmaps | [BeatmapExtended](#beatmapextended)[] | Includes `beatmapset` (with `ratings`), `failtimes`, and `max_combo`.
+     * beatmaps | [BeatmapExtended](#beatmapextended)[] | Includes `beatmapset` (with `ratings`), `failtimes`, `max_combo`, and `owners`.
      *
      * @queryParam ids[] integer Beatmap IDs to be returned. Specify once for each beatmap ID requested. Up to 50 beatmaps can be requested at once. Example: 1
      *
@@ -309,7 +311,9 @@ class BeatmapsController extends Controller
             $beatmaps = Beatmap
                 ::whereIn('beatmap_id', $ids)
                 ->whereHas('beatmapset')
+                ->withUserPlaycount(\Auth::id())
                 ->with([
+                    'beatmapOwners.user',
                     'beatmapset',
                     'beatmapset.userRatings' => fn ($q) => $q->select('beatmapset_id', 'rating'),
                     'failtimes',
@@ -351,7 +355,10 @@ class BeatmapsController extends Controller
         $params = get_params(request()->all(), null, ['checksum:string', 'filename:string', 'id:int']);
 
         foreach ($params as $key => $value) {
-            $beatmap = Beatmap::whereHas('beatmapset')->firstWhere($keyMap[$key], $value);
+            $beatmap = Beatmap
+                ::whereHas('beatmapset')
+                ->withUserPlaycount(\Auth::id())
+                ->firstWhere($keyMap[$key], $value);
 
             if ($beatmap !== null) {
                 break;
@@ -389,7 +396,10 @@ class BeatmapsController extends Controller
      */
     public function show($id)
     {
-        $beatmap = Beatmap::whereHas('beatmapset')->findOrFail($id);
+        $beatmap = Beatmap
+            ::whereHas('beatmapset')
+            ->withUserPlaycount(\Auth::id())
+            ->findOrFail($id);
 
         if (is_api_request()) {
             return json_item($beatmap, new BeatmapTransformer(), static::DEFAULT_API_INCLUDES);
@@ -454,6 +464,8 @@ class BeatmapsController extends Controller
      *
      * Returns the top scores for a beatmap.
      *
+     * This endpoint is deprecated. Use [Get Beatmap scores](#get-beatmap-scores) with appropriate api version header instead.
+     *
      * ---
      *
      * ### Response Format
@@ -468,7 +480,7 @@ class BeatmapsController extends Controller
      */
     public function soloScores($id)
     {
-        return static::beatmapScores($id, ScoreTransformer::TYPE_SOLO, null);
+        return static::beatmapScores($id, false, null);
     }
 
     public function updateOwner($id)

@@ -80,14 +80,14 @@ return [
             'support_the_game' => 'oyunu destekle',
             'testflight' => 'testflight',
         ],
+        'legacy_matches_controller' => [
+            '_' => '',
+        ],
         'legal_controller' => [
             '_' => 'bilgi',
         ],
         'livestreams_controller' => [
             '_' => 'canlı yayınlar',
-        ],
-        'matches_controller' => [
-            '_' => 'maçlar',
         ],
         'news_controller' => [
             '_' => 'haberler',
@@ -108,8 +108,11 @@ return [
             '_' => 'sıralamalar',
         ],
         'teams_controller' => [
-            '_' => '',
-            'show' => '',
+            '_' => 'takımlar',
+            'create' => 'takım oluştur',
+            'edit' => 'takım ayarları',
+            'leaderboard' => 'takım sıralaması',
+            'show' => 'takım bilgisi',
         ],
         'tournaments_controller' => [
             '_' => 'turnuvalar',
@@ -133,6 +136,11 @@ return [
     ],
     'store' => [
         '_' => 'mağaza',
+    ],
+    'teams' => [
+        'members_controller' => [
+            'index' => 'takım üyeleri',
+        ],
     ],
     'users' => [
         'modding_history_controller' => [

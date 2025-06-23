@@ -20,17 +20,19 @@ return [
         'channel' => 'chat',
         'forum_topic' => 'foro',
         'news_post' => 'noticias',
+        'team' => 'equipo',
         'user' => 'perfil',
     ],
 
     'filters' => [
         '_' => 'todas',
-        'user' => 'perfil',
         'beatmapset' => 'mapas',
-        'forum_topic' => 'foro',
-        'news_post' => 'noticias',
         'build' => 'versiones',
         'channel' => 'chat',
+        'forum_topic' => 'foro',
+        'news_post' => 'noticias',
+        'team' => 'equipo',
+        'user' => 'perfil',
     ],
 
     'item' => [
@@ -121,6 +123,16 @@ return [
                     'channel_message_group' => 'de :username',
                 ],
             ],
+
+            'channel_team' => [
+                '_' => '',
+
+                'team' => [
+                    'channel_team' => '',
+                    'channel_team_compact' => '',
+                    'channel_team_group' => '',
+                ],
+            ],
         ],
 
         'build' => [
@@ -156,6 +168,22 @@ return [
                 '_' => 'Nueva respuesta en el foro',
                 'forum_topic_reply' => ':username ha respondido a «:title»',
                 'forum_topic_reply_compact' => ':username ha respondido',
+            ],
+        ],
+
+        'team' => [
+            'team_application' => [
+                '_' => 'Solicitud de unirse al equipo',
+
+                'team_application_accept' => "Ahora eres miembro del equipo :title",
+                'team_application_accept_compact' => "Ahora eres miembro del equipo :title",
+
+                'team_application_group' => '',
+
+                'team_application_reject' => 'Tu solicitud para unirte al equipo :title ha sido rechazada',
+                'team_application_reject_compact' => 'Tu solicitud para unirte al equipo :title ha sido rechazada',
+                'team_application_store' => '',
+                'team_application_store_compact' => '',
             ],
         ],
 
@@ -217,11 +245,13 @@ return [
 
         'channel' => [
             'announcement' => [
-                'announce' => 'Hay un nuevo anuncio en «:name»',
+                'channel_announcement' => '',
             ],
-
             'channel' => [
-                'pm' => 'Has recibido un nuevo mensaje de :username',
+                'channel_message' => '',
+            ],
+            'channel_team' => [
+                'channel_team' => '',
             ],
         ],
 
@@ -240,6 +270,14 @@ return [
         'forum_topic' => [
             'forum_topic_reply' => [
                 'forum_topic_reply' => 'Hay nuevas respuestas en «:title»',
+            ],
+        ],
+
+        'team' => [
+            'team_application' => [
+                'team_application_accept' => "Ahora eres miembro del equipo :title",
+                'team_application_reject' => 'Tu solicitud para unirte al equipo :title ha sido rechazada',
+                'team_application_store' => '',
             ],
         ],
 

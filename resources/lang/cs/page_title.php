@@ -32,7 +32,7 @@ return [
             'verify_link' => 'ověření účtu',
         ],
         'artists_controller' => [
-            '_' => 'featured artists',
+            '_' => 'oficiální umělci',
         ],
         'beatmap_discussion_posts_controller' => [
             '_' => 'příspěvky diskuze o beatmapě',
@@ -80,14 +80,14 @@ return [
             'support_the_game' => 'podpoř hru',
             'testflight' => 'testflight',
         ],
+        'legacy_matches_controller' => [
+            '_' => '',
+        ],
         'legal_controller' => [
             '_' => 'informace',
         ],
         'livestreams_controller' => [
             '_' => 'živá vysílání',
-        ],
-        'matches_controller' => [
-            '_' => 'zápasy',
         ],
         'news_controller' => [
             '_' => 'novinky',
@@ -108,8 +108,11 @@ return [
             '_' => 'hodnocení',
         ],
         'teams_controller' => [
-            '_' => '',
-            'show' => '',
+            '_' => 'týmy',
+            'create' => 'vytvořit tým',
+            'edit' => 'nastavení týmu',
+            'leaderboard' => 'žebříček týmu',
+            'show' => 'informace o týmu',
         ],
         'tournaments_controller' => [
             '_' => 'turnaje',
@@ -133,6 +136,11 @@ return [
     ],
     'store' => [
         '_' => 'obchod',
+    ],
+    'teams' => [
+        'members_controller' => [
+            'index' => 'členové týmu',
+        ],
     ],
     'users' => [
         'modding_history_controller' => [

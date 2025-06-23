@@ -45,6 +45,9 @@
           "beatmap_id": {
             "type": "long"
           },
+          "bpm": {
+            "type": "double"
+          },
           "convert": {
             "type": "boolean"
           },
@@ -87,6 +90,14 @@
           "playmode": {
             "type": "byte"
           },
+          "top_tags": {
+            "type": "text",
+            "fields": {
+              "raw": {
+                "type": "keyword"
+              }
+            }
+          },
           "total_length": {
             "type": "long"
           },
@@ -97,9 +108,6 @@
             "type": "text"
           }
         }
-      },
-      "bpm": {
-        "type": "double"
       },
       "creator": {
         "type": "text",

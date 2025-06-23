@@ -6,9 +6,9 @@
 return [
     'landing' => [
         'download' => 'Scarica ora',
-        'online' => '<strong>:players</strong> giocatori online in <strong>:games</strong> partite',
+        'online' => '<strong>:players</strong> online in <strong>:games</strong> partite',
         'peak' => 'Picco, :count utenti online',
-        'players' => '<strong>:count</strong> utenti registrati',
+        'players' => '<strong>:count</strong> giocatori registrati',
         'title' => 'benvenuto',
         'see_more_news' => 'guarda più notizie',
 
@@ -26,6 +26,9 @@ return [
         'placeholder' => 'digita per cercare',
         'title' => 'Cerca',
 
+        'artist_track' => [
+            'more_simple' => '',
+        ],
         'beatmapset' => [
             'login_required' => 'Accedi per cercare beatmap',
             'more' => 'altri :count risultati di ricerca delle beatmap',
@@ -51,10 +54,16 @@ return [
 
         'mode' => [
             'all' => 'tutto',
+            'artist_track' => '',
             'beatmapset' => 'beatmap',
             'forum_post' => 'forum',
+            'team' => '',
             'user' => 'giocatore',
             'wiki_page' => 'wiki',
+        ],
+
+        'team' => [
+            'more_simple' => '',
         ],
 
         'user' => [

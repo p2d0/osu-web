@@ -20,17 +20,19 @@ return [
         'channel' => 'percakapan',
         'forum_topic' => 'forum',
         'news_post' => 'berita',
+        'team' => 'tim',
         'user' => 'profil',
     ],
 
     'filters' => [
         '_' => 'semua',
-        'user' => 'profil',
         'beatmapset' => 'beatmap',
-        'forum_topic' => 'forum',
-        'news_post' => 'berita',
         'build' => 'build',
         'channel' => 'chat',
+        'forum_topic' => 'forum',
+        'news_post' => 'berita',
+        'team' => 'tim',
+        'user' => 'profil',
     ],
 
     'item' => [
@@ -121,6 +123,16 @@ return [
                     'channel_message_group' => 'dari :username',
                 ],
             ],
+
+            'channel_team' => [
+                '_' => '',
+
+                'team' => [
+                    'channel_team' => '',
+                    'channel_team_compact' => '',
+                    'channel_team_group' => '',
+                ],
+            ],
         ],
 
         'build' => [
@@ -156,6 +168,22 @@ return [
                 '_' => 'Balasan forum baru',
                 'forum_topic_reply' => ':username membalas postinganmu pada utas forum ":title"',
                 'forum_topic_reply_compact' => ':username membalas postinganmu',
+            ],
+        ],
+
+        'team' => [
+            'team_application' => [
+                '_' => 'Permintaan gabung tim',
+
+                'team_application_accept' => "Kamu kini merupakan anggota dari tim :title",
+                'team_application_accept_compact' => "Kamu kini merupakan anggota dari tim :title",
+
+                'team_application_group' => '',
+
+                'team_application_reject' => 'Permintaan kamu untuk bergabung ke tim :title telah ditolak',
+                'team_application_reject_compact' => 'Permintaan kamu untuk bergabung ke tim :title telah ditolak',
+                'team_application_store' => '',
+                'team_application_store_compact' => '',
             ],
         ],
 
@@ -217,11 +245,13 @@ return [
 
         'channel' => [
             'announcement' => [
-                'announce' => 'Terdapat pengumuman baru pada ":name"',
+                'channel_announcement' => '',
             ],
-
             'channel' => [
-                'pm' => 'Kamu menerima pesan baru dari :username',
+                'channel_message' => '',
+            ],
+            'channel_team' => [
+                'channel_team' => '',
             ],
         ],
 
@@ -240,6 +270,14 @@ return [
         'forum_topic' => [
             'forum_topic_reply' => [
                 'forum_topic_reply' => 'Terdapat balasan baru pada ":title"',
+            ],
+        ],
+
+        'team' => [
+            'team_application' => [
+                'team_application_accept' => "Kamu kini merupakan anggota dari tim :title",
+                'team_application_reject' => 'Permintaan kamu untuk bergabung ke tim :title telah ditolak',
+                'team_application_store' => '',
             ],
         ],
 

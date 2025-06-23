@@ -34,6 +34,11 @@ return [
         'title' => ':username님의 기록을 신고하겠습니까?',
     ],
 
+    'team' => [
+        'button' => '팀 신고하기',
+        'title' => ':username님의 팀을 신고하겠습니까?',
+    ],
+
     'user' => [
         'button' => '신고',
         'title' => ':username님을 신고하겠습니까?',

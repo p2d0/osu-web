@@ -44,7 +44,8 @@ export default class Entry extends React.Component<Props> {
 
   @computed
   private get canSubmit() {
-    return !this.commentTooLong
+    return this.store.canJudge
+      && !this.commentTooLong
       && this.currentVote.scores.size === this.store.scoringCategories.length
       && (this.currentVote.comment !== this.initialVote.comment
           || this.store.scoringCategories.some((category) => (
@@ -83,6 +84,7 @@ export default class Entry extends React.Component<Props> {
         >
           <TextareaAutosize
             className='input-text'
+            disabled={!this.store.canJudge}
             maxRows={20}
             onChange={this.handleCommentChange}
             rows={6}
@@ -123,7 +125,7 @@ export default class Entry extends React.Component<Props> {
     return (
       <div key={category.id} className='contest-judge-entry__category'>
         <div className='contest-judge-entry__label'>
-          <div className='contest-judge-entry__description-icon' title={category.description}>
+          <div title={category.description}>
             <i className='fas fa-question-circle' />
           </div>
 
@@ -133,6 +135,7 @@ export default class Entry extends React.Component<Props> {
         <input
           className='contest-judge-entry__slider'
           data-category-id={category.id}
+          disabled={!this.store.canJudge}
           max={category.max_value}
           onChange={this.handleRangeInputChange}
           type='range'
@@ -154,7 +157,7 @@ export default class Entry extends React.Component<Props> {
   private readonly submitVote = () => {
     if (this.xhr != null || !this.canSubmit) return;
 
-    this.xhr = $.ajax(route('contest-entries.judge-vote', { contest_entry: this.props.entry.id }), {
+    this.xhr = $.ajax(route('contests.entries.judge-vote', { contest: this.props.entry.contest_id, contest_entry: this.props.entry.id }), {
       data: {
         comment: this.currentVote.comment,
         scores: [...this.currentVote.scores.values()],

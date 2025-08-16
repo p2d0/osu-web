@@ -527,6 +527,12 @@
             "Description": "How sharp angles should be"
           },
           {
+            "Name": "stream_angle_sharpness",
+            "Type": "number",
+            "Label": "Angle sharpness",
+            "Description": "How sharp angles should be"
+          },
+          {
             "Name": "seed",
             "Type": "number",
             "Label": "Seed",

@@ -29,7 +29,6 @@ class ScoresController extends BaseController
         ]);
         if($beatmapId <= 0)
             $beatmapId = Beatmap::where('checksum', $params['checksum'])->first()->beatmap_id;
-
         $score = DB::transaction(function () use ($beatmapId, $request, $tokenId) {
             $user = auth()->user();
             $scoreToken = ScoreToken::where([

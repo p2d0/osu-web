@@ -100,7 +100,7 @@ class Message extends Model implements ReportableInterface
         };
 
         if ($class !== null) {
-            new $class($this, $this->sender)->dispatch();
+            // new $class($this, $this->sender)->dispatch();
         }
     }
 

@@ -87,6 +87,8 @@ class ScoreToken extends Model
     public function assertValid(): void
     {
         $beatmap = $this->beatmap;
+        // var_dump($this->beatmapHash);
+        // var_dump($beatmap->checksum);
         if ($this->beatmapHash !== $beatmap->checksum) {
             throw new InvariantException(osu_trans('score_tokens.create.beatmap_hash_invalid'));
         }

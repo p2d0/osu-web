@@ -12,6 +12,7 @@ use App\Models\Beatmap;
 use App\Models\ScoreToken;
 use App\Transformers\ScoreTokenTransformer;
 use PDOException;
+use Log;
 
 class ScoreTokensController extends BaseController
 {
@@ -22,21 +23,15 @@ class ScoreTokensController extends BaseController
 
     public function store($beatmapId)
     {
-        if (!$GLOBALS['cfg']['osu']['scores']['submission_enabled']) {
-            abort(422, 'score submission is disabled');
-        }
+        // if (!$GLOBALS['cfg']['osu']['scores']['submission_enabled']) {
+        //     abort(422, 'score submission is disabled');
+        // }
 
         $user = auth()->user();
         $request = \Request::instance();
-
-        $scoreToken = new ScoreToken([
-            'beatmap_id' => $beatmap->getKey(),
-            'build_id' => ClientCheck::parseToken($request)['buildId'],
-            'user_id' => $user->getKey(),
-            ...get_params($request->all(), null, [
-                'beatmap_hash',
-                'ruleset_id:int',
-            ]),
+        $params = get_params($request->all(), null, [
+            'beatmap_hash',
+            'ruleset_id:int',
         ]);
 
         if($beatmapId > 0){
@@ -61,7 +56,13 @@ class ScoreTokensController extends BaseController
         $buildId = ClientCheck::parseToken($request)['buildId'];
 
         try {
-            $scoreToken->saveOrExplode();
+            $scoreToken = ScoreToken::create([
+                'beatmap_id' => $beatmap->getKey(),
+                'build_id' => $buildId,
+                'beatmap_hash' => $beatmap->checksum,
+                'ruleset_id' => $params['ruleset_id'],
+                'user_id' => $user->getKey(),
+            ]);
         } catch (PDOException $e) {
             // TODO: move this to be a validation inside Score model
             throw new InvariantException('failed creating score token');

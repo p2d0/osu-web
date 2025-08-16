@@ -88,7 +88,6 @@ class BeatmapsController extends Controller
             $beatmap = Beatmap::find($id);
         else
             $beatmap = Beatmap::where('checksum', $params['checksum'])->first();
-
         if($params['beatmapset_id'])
             $beatmapset = Beatmapset::find($params['beatmapset_id']);
 
